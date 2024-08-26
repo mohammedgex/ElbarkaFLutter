@@ -1,0 +1,29 @@
+import 'package:baraka_trans/consts/fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'app/routes/app_pages.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.initialize('c54d6dfe-27f3-4e1c-9251-ca82ef60eeb1');
+  OneSignal.Notifications.requestPermission(true);
+
+  runApp(
+    GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "barakaApp",
+      initialRoute: AppPages.INITIAL,
+      theme: ThemeData(fontFamily: Appfonts.mainFont),
+      getPages: AppPages.routes,
+      locale: const Locale("ar"),
+    ),
+  );
+}

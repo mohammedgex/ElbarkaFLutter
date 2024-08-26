@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1054782259941",
+    "firebase_url": "https://barakatrans-4e936-default-rtdb.firebaseio.com",
+    "project_id": "barakatrans-4e936",
+    "storage_bucket": "barakatrans-4e936.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054782259941:android:8a65729583001b70370a0c",
+        "android_client_info": {
+          "package_name": "com.barakatrans.baraka_trans"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDETjfsuX1VIc8j_74CnXfchZb5g2cS12E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,119 @@
+name: baraka_trans
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.6
+  get: 4.6.6
+  flutter: 
+    sdk: flutter
+  image_picker: ^1.0.7
+  flutter_svg: ^2.0.10+1
+  get_storage: ^2.1.1	
+  smooth_page_indicator: ^1.2.0+3
+  timeline_tile: ^2.0.0
+  http: ^1.2.2
+  searchfield: ^1.0.1
+  lottie: ^3.1.0
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  intl: ^0.18.1
+  flutter_onboarding_slider: ^1.0.11
+  card_swiper: ^3.0.1
+  select_field: ^1.1.0
+  time_picker_spinner_pop_up: ^1.0.3
+  fancy_shimmer_image: ^2.0.3
+  introduction_screen: ^3.1.14
+  dots_indicator: ^2.1.2
+  board_datetime_picker: ^2.1.0
+  carousel_slider: ^4.2.1
+  iconly: ^1.0.1
+  flutter_otp_text_field: ^1.1.3+2
+  flutter_tawkto: ^0.0.4
+  webview_flutter: ^4.8.0
+  easy_date_timeline: ^1.0.3
+  url_launcher: ^6.1.14
+  dio: ^5.6.0
+  datetime_picker_field_platform: ^0.0.1
+  onesignal_flutter: ^5.2.3
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
+  firebase_storage: ^11.6.0
+
+dev_dependencies: 
+  flutter_lints: 4.0.0
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/icons/
+    - assets/TextField_Icons/
+    - assets/socail_media/
+    - assets/wallet_assets/
+  fonts:
+    # - family: araboto
+    #   fonts:
+    #     - asset: assets/fonts/ArabotoBold.ttf
+    #       weight: 700
+
+    # - family: ArabotoNormal
+    #   fonts:
+    #     - asset: assets/fonts/ArabotoNormal.ttf
+
+    # - family: ArabotoMedium
+    #   fonts:
+    #     - asset: assets/fonts/ArabotoMedium.ttf
+
+    # - family: ArabotoLight
+    #   fonts:
+    #     - asset: assets/fonts/ArabotoLight.ttf
+    - family: cairo
+      fonts:
+        - asset: assets/cairoFont/Cairo-Regular.ttf
+
+    - family: cairoLight
+      fonts:
+        - asset: assets/cairoFont/Cairo-Light.ttf
+
+    - family: cairoMedium
+      fonts:
+        - asset: assets/cairoFont/Cairo-Medium.ttf
+
+    - family: cairoBold
+      fonts:
+        - asset: assets/cairoFont/Cairo-Bold.ttf
+        
+    - family: joseFine
+      fonts:
+        - asset: assets/JosefinSans-Bold.ttf
+
+    - family: tajawal-Bold
+      fonts:
+        - asset: assets/tajwal/Tajawal-Bold.ttf
+
+    # - family: madani
+    #   fonts:
+    #     - asset: assets/madani/Regular.ttf
+
+    # - family: madaniBold
+    #   fonts:
+    #     - asset: assets/madani/Bold.ttf
+
+    # - family: madaniMedium
+    #   fonts:
+    #     - asset: assets/madani/Medium.ttf
+
+    # - family: madaniBlack
+    #   fonts:
+    #     - asset: assets/madani/Black.ttf    
+
+    # - family: madaniLight
+    #   fonts:
+    #     - asset: assets/madani/Light.ttf   
+         
