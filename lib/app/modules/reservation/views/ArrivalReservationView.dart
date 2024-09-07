@@ -10,13 +10,14 @@ import 'package:iconly/iconly.dart';
 import '../controllers/reservation_controller.dart';
 
 class ArrivalReservationView extends GetView<ReservationController> {
-  const ArrivalReservationView({Key? key}) : super(key: key);
+  const ArrivalReservationView({super.key});
 
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
     final _formKey = GlobalKey<FormState>();
+    print(controller.reservationId);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -180,12 +181,10 @@ class ArrivalReservationView extends GetView<ReservationController> {
                       );
                     }
                   },
-                  child: controller.isLoading.value
-                      ? const CircularProgressIndicator()
-                      : const Button(
-                          raduis: 12,
-                          title: "التالي",
-                        ),
+                  child: const Button(
+                    raduis: 12,
+                    title: "التالي",
+                  ),
                 ),
               ],
             ),

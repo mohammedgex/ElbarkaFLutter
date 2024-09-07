@@ -4,7 +4,6 @@ import 'package:baraka_trans/utilits/payment_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-
 import '../controllers/my_payments_controller.dart';
 
 class MyPaymentsView extends GetView<MyPaymentsController> {
@@ -31,39 +30,43 @@ class MyPaymentsView extends GetView<MyPaymentsController> {
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(12),
-          child: FutureBuilder(
-            future: controller.fetchUserPayments(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: Lottie.asset('assets/loading.json',
-                      width: 100, height: 100),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: FutureBuilder(
+              future: controller.fetchUserPayments(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: Lottie.asset('assets/loading.json',
+                        width: 100, height: 100),
+                  );
+                }
+                return Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height,
+                      child: ListView.separated(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return PaymentOperation(
+                            cashAmount: snapshot.data![index].amount,
+                            date: snapshot.data![index].createdAt,
+                            paymentMethod: snapshot.data![index].paymentType,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            height: 10,
+                          );
+                        },
+                      ),
+                    )
+                  ],
                 );
-              }
-              return SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height,
-                child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  reverse: true,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return PaymentOperation(
-                      cashAmount: snapshot.data![index].amount,
-                      date: snapshot.data![index].createdAt,
-                      paymentMethod: snapshot.data![index].paymentType,
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 10,
-                    );
-                  },
-                ),
-              );
-            },
+              },
+            ),
           ),
         ));
   }

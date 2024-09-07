@@ -17,6 +17,7 @@ class MeccaVisitsReservationView extends GetView<ReservationController> {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
     final _formKey = GlobalKey<FormState>();
+    print(controller.reservationId);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -171,7 +172,7 @@ class MeccaVisitsReservationView extends GetView<ReservationController> {
                 InkWell(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      // controller.arivalDepture(true);
+                      controller.visits(true);
                       controller.pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.slowMiddle,

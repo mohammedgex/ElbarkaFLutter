@@ -6,7 +6,35 @@ import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
 class ReservationDetails extends StatelessWidget {
-  const ReservationDetails({super.key});
+  ReservationDetails(
+      {super.key,
+      this.imageUrl,
+      this.routeName,
+      this.routePrice,
+      this.busTitle,
+      // this.arrivalDate,
+      // this.arrivalPoint,
+      this.busRiders,
+      this.date,
+      // this.deptureDate,
+      // this.depturePoint,
+      this.paymentMethod,
+      this.id,
+      this.status});
+
+  String? imageUrl;
+  String? date;
+  String? routeName;
+  int? id;
+  String? routePrice;
+  String? status;
+  String? paymentMethod;
+  String? busTitle;
+  String? arrivalPoint;
+  String? arrivalDate;
+  String? depturePoint;
+  String? deptureDate;
+  String? busRiders;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +59,10 @@ class ReservationDetails extends StatelessWidget {
                     width: 95,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        image: const DecorationImage(
+                        image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                "https://media.wired.com/photos/5cf832279c2a7cd3975976ca/master/pass/Transpo_XcelsiorChargeCharging_TA.jpg"))),
+                                "http://192.168.1.80:8000/uploads/${imageUrl}"))),
                   ),
                   Positioned(
                     right: 5,
@@ -61,13 +89,13 @@ class ReservationDetails extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "#104545",
-                    style: TextStyle(
+                    "#$id",
+                    style: const TextStyle(
                         color: appColors.mainColor,
                         fontSize: 14,
                         fontFamily: Appfonts.meduimFont),
@@ -76,17 +104,17 @@ class ReservationDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         IconlyLight.calendar,
                         size: 16,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       Center(
                         child: Text(
-                          "10-10-2024",
-                          style: TextStyle(
+                          date!,
+                          style: const TextStyle(
                               fontSize: 11,
                               color: appColors.textColor,
                               fontFamily: Appfonts.meduimFont),
@@ -95,22 +123,22 @@ class ReservationDetails extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "جدة-مطار-المدينة-مطار",
-                    style: TextStyle(
+                    routeName!,
+                    style: const TextStyle(
                         fontSize: 10,
                         fontFamily: Appfonts.meduimFont,
                         color: appColors.textColor),
                   ),
                   Row(
                     children: [
-                      Icon(IconlyLight.wallet,
+                      const Icon(IconlyLight.wallet,
                           size: 16, color: appColors.textColor),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       Text(
-                        "3000 ر.س",
-                        style: TextStyle(
+                        routePrice!,
+                        style: const TextStyle(
                             fontSize: 10,
                             fontFamily: Appfonts.meduimFont,
                             color: appColors.textColor),

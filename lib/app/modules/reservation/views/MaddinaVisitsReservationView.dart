@@ -18,6 +18,7 @@ class MaddinaVisitsReservationView extends GetView<ReservationController> {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
     final _formKey = GlobalKey<FormState>();
+    print(controller.reservationId);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -173,7 +174,7 @@ class MaddinaVisitsReservationView extends GetView<ReservationController> {
                 InkWell(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      // controller.arivalDepture(true);
+                      // controller.visits(false);
                       Get.offAllNamed(Routes.PAYMENTMETHODS, arguments: {
                         "reservationId": controller.reservationId,
                         "amountEGP": controller.amountSR!,

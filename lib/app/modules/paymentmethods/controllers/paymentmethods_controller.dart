@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PaymentmethodsController extends GetxController
-    with SingleGetTickerProviderMixin {
+    with GetSingleTickerProviderStateMixin {
   String? paymentKey;
   final Timecontroller = BoardDateTimeTextController();
   RxBool isLoading = false.obs;
@@ -66,7 +66,8 @@ class PaymentmethodsController extends GetxController
 
   void payWithCard() async {
     try {
-      final result = await _authRepository.payWithCard(1, amountEGP! * 13.5);
+      final result = await _authRepository.payWithCard(
+          reservationId! ?? 1, amountEGP! * 13.5);
       if (result["success"]) {
         print("success");
       } else {}

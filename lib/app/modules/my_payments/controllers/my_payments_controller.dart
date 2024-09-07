@@ -27,7 +27,7 @@ class MyPaymentsController extends GetxController {
       // Handle errors
       print('Failed to fetch transportation data: $e');
     }
-    return paymentsList;
+    return paymentsList.reversed.toList();
   }
 
   String extractDate(String dateTimeString) {

@@ -1,12 +1,37 @@
+import 'dart:convert';
+
+import 'package:baraka_trans/app/data/reservationModel.dart';
 import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
+import 'package:baraka_trans/utilits/api_service.dart';
 import 'package:baraka_trans/utilits/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
 class MyreservationsController extends GetxController {
+  final ApiService _apiService = ApiService();
+
+  Future<List> fetchUserReservations() async {
+    List<reservationModel> reservationsList =
+        []; // List of transportation models
+
+    try {
+      final response = await _apiService.get('user/reservations');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body)["reservations"];
+        reservationsList =
+            data.map((item) => reservationModel.fromJson(item)).toList();
+      }
+    } catch (e) {
+      // Handle errors
+      print('Failed to fetch transportation data: $e');
+    }
+    return reservationsList.reversed.toList();
+  }
+
+  // show dialog
   void viewMore(BuildContext context) {
     Get.bottomSheet(Expanded(
       child: Container(

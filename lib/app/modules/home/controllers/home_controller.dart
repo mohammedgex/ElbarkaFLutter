@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 class HomeController extends GetxController {
   final RxList _pages = [
     const MainView(),
-    const MyreservationsView(),
+    MyreservationsView(),
     const MyprofileView(),
   ].obs;
 

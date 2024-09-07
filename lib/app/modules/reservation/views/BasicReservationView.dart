@@ -170,8 +170,7 @@ class BasicReservationView extends GetView<ReservationController> {
                   Obx(() => InkWell(
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            // controller.reservation();
-
+                            controller.reservation();
                             controller.pageController.nextPage(
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.slowMiddle,

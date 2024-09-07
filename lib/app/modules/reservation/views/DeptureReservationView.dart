@@ -17,6 +17,7 @@ class DeptureReservationView extends GetView<ReservationController> {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
     final _formKey = GlobalKey<FormState>();
+    print(controller.reservationId);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -173,7 +174,7 @@ class DeptureReservationView extends GetView<ReservationController> {
                 InkWell(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      // controller.arivalDepture(true);
+                      // controller.arivalDepture(false);
                       controller.pageController.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.slowMiddle,

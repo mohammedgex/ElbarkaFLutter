@@ -70,7 +70,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MYRESERVATIONS,
-      page: () => const MyreservationsView(),
+      page: () => MyreservationsView(),
       binding: MyreservationsBinding(),
     ),
     GetPage(

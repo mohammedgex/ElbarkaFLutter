@@ -1,6 +1,7 @@
 analyzer:
   errors:
-    camel_case_types: ignore ignore ignore
+    camel_case_types: ignore ignore ignore ignore
+    must_be_immutable: ignore
     no_leading_underscores_for_local_identifiers: ignore
     non_constant_identifier_names: ignore ignore ignore ignore ignore
     prefer_typing_uninitialized_variables: ignore

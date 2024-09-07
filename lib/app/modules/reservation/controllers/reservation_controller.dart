@@ -54,7 +54,7 @@ class ReservationController extends GetxController {
           height: 400,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(16)),
-          child: Text("ddd"),
+          child: const Text("ddd"),
         ),
         backgroundColor: Colors.white,
         enterBottomSheetDuration: const Duration(milliseconds: 200),
@@ -70,7 +70,7 @@ class ReservationController extends GetxController {
         routeId!,
         int.parse(basicRidersCount!),
         int.parse(basicBagsCount!),
-        "jjf",
+        "البركة",
         basicMaccaHotelName!,
         basicMaddinaName!,
       );
@@ -78,11 +78,17 @@ class ReservationController extends GetxController {
       if (result["success"]) {
         isLoading.value = false;
         reservationId = jsonDecode(result["reservation"]["id"]);
+        print("IDD $reservationId");
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.slowMiddle,
+        );
       } else {
         print("failed");
         isLoading.value = false;
       }
     } catch (e) {
+      print(e);
       isLoading.value = false;
     }
   }
@@ -102,6 +108,7 @@ class ReservationController extends GetxController {
       // success
       if (result["success"]) {
         isLoading.value = false;
+        print('doneeeeeeeeeeeee');
       } else {
         print("failed");
         isLoading.value = false;
