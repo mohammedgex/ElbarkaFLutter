@@ -3,6 +3,7 @@ import 'package:baraka_trans/app/modules/reservation/views/DeptureReservationVie
 import 'package:baraka_trans/app/modules/reservation/views/MaddinaVisitsReservationView.dart';
 import 'package:baraka_trans/app/modules/reservation/views/MeccaVisitsReservationView.dart';
 import 'package:baraka_trans/app/modules/reservation/views/BasicReservationView.dart';
+import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,19 @@ import 'package:get/get.dart';
 import '../controllers/reservation_controller.dart';
 
 class ReservationView extends GetView<ReservationController> {
-  const ReservationView({Key? key}) : super(key: key);
+  const ReservationView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
+    controller.busId = args["busId"];
+    print(args["selectedRouteId"]);
+    // final selectedRoute = args["selectedRoute"];
+    controller.routeId = args["selectedRouteId"];
+    print(controller.busId);
+    controller.amountSR = args["amountSR"];
+    print("${controller.amountSR} ${args["amountSR"]}");
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -29,7 +39,7 @@ class ReservationView extends GetView<ReservationController> {
         ),
         centerTitle: true,
         leading: InkWell(
-          onTap: () => Get.back(),
+          onTap: () => Get.offAllNamed(Routes.HOME),
           child: const Icon(
             color: Colors.white,
             Icons.cancel,

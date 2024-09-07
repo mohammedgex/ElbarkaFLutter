@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
 class MyRotue extends StatelessWidget {
-  const MyRotue(
-      {super.key, this.isSelected = true, this.price, this.routeName});
+  const MyRotue({
+    super.key,
+    this.isSelected = true,
+    this.price,
+    this.routeName,
+  });
 
   final bool? isSelected;
   final String? routeName;
@@ -18,11 +22,12 @@ class MyRotue extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       height: isSelected! ? 60 : 50,
       decoration: BoxDecoration(
-          border: isSelected! ? Border.all(color: appColors.borderColor) : null,
-          color: isSelected!
-              ? appColors.mainColor
-              : const Color.fromARGB(172, 146, 137, 137),
-          borderRadius: BorderRadius.circular(12)),
+        border: isSelected! ? Border.all(color: appColors.borderColor) : null,
+        color: isSelected!
+            ? appColors.mainColor
+            : const Color.fromARGB(172, 146, 137, 137),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,13 +38,18 @@ class MyRotue extends StatelessWidget {
                 IconlyBold.location,
                 color: appColors.secondColor,
               ),
-              const SizedBox(
-                width: 4,
-              ),
-              Text(
-                routeName!,
-                style: const TextStyle(
-                    color: Colors.white, fontFamily: Appfonts.mainFont),
+              const SizedBox(width: 4),
+              // Wrap routeName with Flexible instead of Expanded
+              SizedBox(
+                width: 200,
+                child: Text(
+                  routeName ?? '',
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontFamily: Appfonts.mainFont,
+                      fontSize: 12),
+                ),
               ),
             ],
           ),
@@ -48,11 +58,15 @@ class MyRotue extends StatelessWidget {
             color: appColors.secondColor,
             size: 35,
           ),
+          // Price text with ellipsis overflow
           Text(
-            price!,
+            price ?? '',
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-                color: Colors.white, fontFamily: Appfonts.boldFont),
-          )
+                color: Colors.white,
+                fontFamily: Appfonts.boldFont,
+                fontSize: 12),
+          ),
         ],
       ),
     );

@@ -1,5 +1,5 @@
+import 'package:baraka_trans/app/modules/main/controllers/main_controller.dart';
 import 'package:baraka_trans/app/modules/my_profile_detials/controllers/my_profile_detials_controller.dart';
-import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:baraka_trans/utilits/TextField.dart';
@@ -9,10 +9,16 @@ import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
 class MyProfileDetialsView extends GetView<MyProfileDetialsController> {
-  const MyProfileDetialsView({Key? key}) : super(key: key);
+  const MyProfileDetialsView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final MainController mainController = Get.put(MainController());
+    mainController.fetchUserData();
+    controller.nameController.text = mainController.userData.value.name;
+    controller.phoneController.text = mainController.userData.value.phone;
+    controller.emailController.text = mainController.userData.value.email;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -34,7 +40,7 @@ class MyProfileDetialsView extends GetView<MyProfileDetialsController> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 24),
             child: Column(
@@ -42,73 +48,77 @@ class MyProfileDetialsView extends GetView<MyProfileDetialsController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: Container(
+                    child: Obx(
+                  () => Container(
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(500),
                       border: Border.all(color: appColors.secondColor),
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "https://www.harleytherapy.co.uk/counselling/wp-content/uploads/16297800391_5c6e812832.jpg"),
+                        image: controller.imageFile!.value.path.isEmpty
+                            ? NetworkImage(
+                                "http://192.168.1.80:8000/uploads/${mainController.userData.value.image}")
+                            : FileImage(controller.imageFile!.value),
                       ),
                       color: appColors.mainColor,
                     ),
                   ),
-                ),
+                )),
                 const SizedBox(height: 4),
-                const Text(
-                  "تغيير الصورة الشخصية",
-                  style: TextStyle(
-                      fontSize: 12, decoration: TextDecoration.underline),
+                InkWell(
+                  onTap: () => controller.pickImage(),
+                  child: const Text(
+                    "تغيير الصورة الشخصية",
+                    style: TextStyle(
+                        fontSize: 12, decoration: TextDecoration.underline),
+                  ),
                 ),
                 const SizedBox(height: 15),
-                const textField(
-                  hint_text: "الاسم الاول",
+                textField(
+                  hint_text: mainController.userData.value.name,
                   type: TextInputType.text,
-                  icon: Icon(
+                  textFieldController: controller.nameController,
+                  icon: const Icon(
                     IconlyLight.edit,
                     color: appColors.secondColor,
                   ),
                 ),
                 const SizedBox(height: 12),
-                const textField(
-                  hint_text: "الاسم الثاني",
-                  type: TextInputType.text,
-                  icon: Icon(
-                    IconlyLight.edit,
-                    color: appColors.secondColor,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const textField(
-                  hint_text: "رقم الهاتف الخاص بك",
+                textField(
+                  hint_text: mainController.userData.value.phone,
+                  textFieldController: controller.phoneController,
                   type: TextInputType.number,
-                  icon: Icon(
+                  icon: const Icon(
                     IconlyLight.call,
                     color: appColors.secondColor,
                   ),
                 ),
                 const SizedBox(height: 12),
-                const textField(
-                  hint_text: "البريد الالكتروني الخاص بك",
+                textField(
+                  hint_text: mainController.userData.value.email,
                   type: TextInputType.emailAddress,
-                  icon: Icon(
+                  textFieldController: controller.emailController,
+                  icon: const Icon(
                     IconlyLight.document,
                     color: appColors.secondColor,
                   ),
                 ),
                 const SizedBox(height: 50),
                 Center(
-                  child: InkWell(
-                    onTap: () => Get.toNamed(Routes.VERIFYACCOUNT),
-                    child: const Button(
-                      title: "حفظ البيانات",
-                      raduis: 16,
-                      Btncolor: appColors.secondColor,
-                    ),
-                  ),
+                  child: Obx(() => GestureDetector(
+                        onTap: () => controller.updateProfile(),
+                        child: controller.isLoading.value
+                            ? const CircularProgressIndicator(
+                                color: appColors.secondColor,
+                              )
+                            : const Button(
+                                title: "حفظ البيانات",
+                                raduis: 16,
+                                Btncolor: appColors.secondColor,
+                              ),
+                      )),
                 ),
               ],
             ),

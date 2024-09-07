@@ -7,41 +7,64 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../controllers/main_controller.dart';
 
 class MainView extends GetView<MainController> {
-  MainView({Key? key}) : super(key: key);
+  const MainView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(MainController());
+    controller.fetchUserData();
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        title: const Row(
-          children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Andrzej_Person_Kancelaria_Senatu.jpg/1200px-Andrzej_Person_Kancelaria_Senatu.jpg",
-              ),
-            ),
-            SizedBox(width: 10),
-            Text(
-              "اهلا بك يا ",
-              style: TextStyle(fontSize: 12, fontFamily: Appfonts.meduimFont),
-            ),
-            Text(
-              "محمد",
-              style: TextStyle(
-                fontSize: 16,
-                color: appColors.secondColor,
-                fontFamily: Appfonts.boldFont,
-              ),
-            ),
-          ],
-        ),
+        title: Obx(() {
+          if (controller.isloading!.value) {
+            return Row(
+              children: [
+                const CircleAvatar(
+                  backgroundColor: appColors.borderColor,
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  width: 200,
+                  height: 20,
+                  color: appColors.borderColor,
+                )
+              ],
+            );
+          } else if (controller.userData.value.name.isNotEmpty) {
+            return Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    "http://192.168.1.80:8000/uploads/${controller.userData.value.image}",
+                  ),
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  "اهلا بك يا ",
+                  style:
+                      TextStyle(fontSize: 12, fontFamily: Appfonts.meduimFont),
+                ),
+                Text(
+                  controller.userData.value.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: appColors.secondColor,
+                    fontFamily: Appfonts.boldFont,
+                  ),
+                ),
+              ],
+            );
+          }
+
+          return const Text("data");
+        }),
         backgroundColor: Colors.white,
         actions: [
           Padding(
@@ -53,138 +76,168 @@ class MainView extends GetView<MainController> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Divider(
-                color: appColors.mainColor,
-                endIndent: 24,
-                height: 1,
-                thickness: 1,
-              ),
-              const Text(
-                "المنصة الاسهل",
-                style: TextStyle(
-                  color: appColors.mainColor,
-                  fontSize: 22,
-                  fontFamily: Appfonts.boldFont,
-                ),
-              ),
-              const Text(
-                "لحجز تشغيلات باصات بأجراءات بسيطة",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: appColors.textColor,
-                  fontFamily: Appfonts.mainFont,
-                ),
-              ),
-              const SizedBox(height: 5),
-              SizedBox(
-                width: double.infinity,
-                height: 200,
-                child: Swiper(
-                  pagination: const SwiperPagination(
-                    alignment: Alignment.bottomCenter,
-                    builder: SwiperPagination.dots,
+      body: FutureBuilder(
+        future: controller.fetchTransportationData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child:
+                  Lottie.asset('assets/loading.json', width: 100, height: 100),
+            );
+          }
+
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Divider(
+                    color: appColors.mainColor,
+                    endIndent: 24,
+                    height: 1,
+                    thickness: 1,
                   ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return FancyShimmerImage(
-                      height: 200,
-                      width: double.infinity,
-                      boxDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                  const Text(
+                    "المنصة الاسهل",
+                    style: TextStyle(
+                      color: appColors.mainColor,
+                      fontSize: 22,
+                      fontFamily: Appfonts.boldFont,
+                    ),
+                  ),
+                  const Text(
+                    "لحجز تشغيلات باصات بأجراءات بسيطة",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: appColors.textColor,
+                      fontFamily: Appfonts.lightFont,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 200,
+                    child: Swiper(
+                      pagination: const SwiperPagination(
+                        alignment: Alignment.bottomCenter,
+                        builder: SwiperPagination.dots,
                       ),
-                      boxFit: BoxFit.cover,
-                      imageUrl:
-                          "https://egsky.net/wp-content/uploads/2022/09/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA-%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6-1.jpg",
-                    );
-                  },
-                  itemCount: 3,
-                  viewportFraction: 1,
-                  scale: 0.7,
-                ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                height: 35,
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(4),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: controller.Categories.length,
-                  itemBuilder: (context, index) {
-                    return Obx(() => InkWell(
-                          onTap: () => controller.selectCategory(index),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 150),
-                            padding: const EdgeInsets.all(4),
-                            width: controller.selectedIndex.value == index
-                                ? 90
-                                : 70,
-                            decoration: BoxDecoration(
-                              boxShadow: const [
-                                BoxShadow(
-                                  offset: Offset(1, 1),
-                                  color: Color.fromRGBO(146, 143, 143, 0.16),
-                                  blurRadius: 1,
-                                  spreadRadius: 1,
-                                ),
-                              ],
-                              color: controller.selectedIndex.value == index
-                                  ? appColors.mainColor
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Center(
-                              child: Text(
-                                controller.Categories[index],
-                                style: TextStyle(
+                      itemBuilder: (BuildContext context, int index) {
+                        return FancyShimmerImage(
+                          height: 200,
+                          width: double.infinity,
+                          boxDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          boxFit: BoxFit.cover,
+                          imageUrl:
+                              "https://egsky.net/wp-content/uploads/2022/09/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA-%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6-1.jpg",
+                        );
+                      },
+                      itemCount: 3,
+                      viewportFraction: 1,
+                      scale: 0.7,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 35,
+                    child: ListView.separated(
+                      padding: const EdgeInsets.all(4),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.Categories.length,
+                      itemBuilder: (context, index) {
+                        return Obx(() => InkWell(
+                              onTap: () => controller.selectCategory(index),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 150),
+                                padding: const EdgeInsets.all(4),
+                                width: controller.selectedIndex.value == index
+                                    ? 90
+                                    : 70,
+                                decoration: BoxDecoration(
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(1, 1),
+                                      color:
+                                          Color.fromRGBO(146, 143, 143, 0.16),
+                                      blurRadius: 1,
+                                      spreadRadius: 1,
+                                    ),
+                                  ],
                                   color: controller.selectedIndex.value == index
-                                      ? Colors.white
-                                      : appColors.textColor,
-                                  fontSize: 12,
-                                  fontWeight:
-                                      controller.selectedIndex.value == index
-                                          ? FontWeight.w500
-                                          : FontWeight.w300,
-                                  fontFamily: Appfonts.meduimFont,
+                                      ? appColors.mainColor
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    controller.Categories[index],
+                                    style: TextStyle(
+                                      color: controller.selectedIndex.value ==
+                                              index
+                                          ? Colors.white
+                                          : appColors.textColor,
+                                      fontSize: 12,
+                                      fontWeight:
+                                          controller.selectedIndex.value ==
+                                                  index
+                                              ? FontWeight.w500
+                                              : FontWeight.w300,
+                                      fontFamily: Appfonts.meduimFont,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ));
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(width: 5);
-                  },
-                ),
+                            ));
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(width: 5);
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // Updated ListView to be scrollable
+                  SizedBox(
+                    width: double.infinity,
+                    child: ListView.separated(
+                      physics:
+                          const ClampingScrollPhysics(), // Allows scrolling
+                      shrinkWrap:
+                          true, // Ensures ListView takes up only as much space as needed
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return BusUnit(
+                            controller: controller,
+                            imageUrl:
+                                "http://192.168.1.80:8000/uploads/${snapshot.data![index].images[0]}",
+                            speed: snapshot.data![index].maxSpeed.toString(),
+                            seatsCount: snapshot.data![index].luggageCapacity
+                                .toString(),
+                            rdiersCount:
+                                snapshot.data![index].capacity.toString(),
+                            title: snapshot.data![index].type,
+                            isAvailable: snapshot.data![index].isAvailable,
+                            Images: snapshot.data![index].images,
+                            features: snapshot.data![index].features,
+                            description: snapshot.data![index].type,
+                            busId: snapshot.data![index].id,
+                            
+                            routes: snapshot.data![index].routes);
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(height: 20);
+                      },
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
-              // Updated ListView to be scrollable
-              SizedBox(
-                width: double.infinity,
-                child: ListView.separated(
-                  physics: const ClampingScrollPhysics(), // Allows scrolling
-                  shrinkWrap:
-                      true, // Ensures ListView takes up only as much space as needed
-                  itemCount: 4,
-                  itemBuilder: (BuildContext context, int index) {
-                    return BusUnit(
-                      controller: controller,
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 20);
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -22,6 +22,7 @@ class PaymobPaymentView extends GetView<PaymentmethodsController> {
           onPageFinished: (String url) {
             // Check if the URL indicates success or failure and navigate accordingly
             if (url.contains("success=true")) {
+              controller.payWithCard();
               Get.toNamed(Routes.PAYMENT_STATUS, arguments: {
                 "paymentStatus": true
               }); // Navigate to success page
@@ -29,8 +30,6 @@ class PaymobPaymentView extends GetView<PaymentmethodsController> {
               Get.toNamed(Routes.PAYMENT_STATUS, arguments: {
                 "paymentStatus": false
               }); // Navigate to success page
-            } else {
-              print("00000000000000000000000000000000000000000000");
             }
           },
           onWebResourceError: (WebResourceError error) {},

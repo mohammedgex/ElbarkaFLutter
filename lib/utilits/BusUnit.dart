@@ -1,3 +1,4 @@
+import 'package:baraka_trans/app/data/tranportaionModel.dart';
 import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
@@ -7,9 +8,34 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BusUnit extends StatelessWidget {
-  const BusUnit({super.key, this.controller});
+  const BusUnit(
+      {super.key,
+      this.controller,
+      this.imageUrl,
+      this.rdiersCount,
+      this.seatsCount,
+      this.speed,
+      this.title,
+      this.isAvailable,
+      this.Images,
+      this.description,
+      this.features,
+      this.routes,
+      this.busId});
 
   final controller;
+  final String? imageUrl;
+  final String? rdiersCount;
+  final String? seatsCount;
+  final String? speed;
+  final String? title;
+  final bool? isAvailable;
+  final List<String>? Images;
+  final List<String>? features;
+  final List<transRoutes>? routes;
+  final int? busId;
+  final String? description;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -38,8 +64,7 @@ class BusUnit extends StatelessWidget {
                   width: double.infinity,
                   child: FancyShimmerImage(
                     boxFit: BoxFit.cover,
-                    imageUrl:
-                        "https://osabus.com/wp-content/uploads/2022/09/49-MAN-1024x768.jpeg",
+                    imageUrl: imageUrl!,
                   ),
                 ),
                 Positioned(
@@ -49,13 +74,15 @@ class BusUnit extends StatelessWidget {
                     width: 80,
                     height: 22,
                     decoration: BoxDecoration(
-                        color: appColors.mainColor,
+                        color: isAvailable!
+                            ? appColors.mainColor.withOpacity(0.9)
+                            : Colors.red,
                         borderRadius: BorderRadius.circular(4)),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        "متاح للحجز",
+                        isAvailable! ? "متاح للحجز" : "غير متاح",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontFamily: Appfonts.meduimFont,
                             color: Colors.white,
                             fontSize: 12),
@@ -65,32 +92,34 @@ class BusUnit extends StatelessWidget {
                 )
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
               child: Text(
-                "أتوبيس مرسيدس كبير",
-                style: TextStyle(
+                title!,
+                style: const TextStyle(
                     fontFamily: Appfonts.boldFont,
                     color: appColors.secondColor,
                     fontSize: 18),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 8),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.person_2_outlined,
                         size: 22,
                         color: appColors.secondColor,
                       ),
                       Text(
-                        "45 راكب",
-                        style: TextStyle(
+                        "${rdiersCount!} راكب",
+                        style: const TextStyle(
                             color: appColors.mainColor,
                             fontFamily: Appfonts.mainFont,
                             fontSize: 12),
@@ -99,17 +128,17 @@ class BusUnit extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.bus_alert_outlined,
                         size: 22,
                         color: appColors.secondColor,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       Text(
-                        "55 مقعد",
-                        style: TextStyle(
+                        "${seatsCount!} مقعد",
+                        style: const TextStyle(
                             color: appColors.mainColor,
                             fontFamily: Appfonts.mainFont,
                             fontSize: 12),
@@ -118,17 +147,17 @@ class BusUnit extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.speed_outlined,
                         size: 22,
                         color: appColors.secondColor,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       Text(
-                        "165 كم/س",
-                        style: TextStyle(
+                        "${speed!} كم/س",
+                        style: const TextStyle(
                             color: appColors.mainColor,
                             fontFamily: Appfonts.mainFont,
                             fontSize: 12),
@@ -142,7 +171,17 @@ class BusUnit extends StatelessWidget {
               thickness: 1,
             ),
             InkWell(
-              onTap: () => Get.toNamed(Routes.TRANSPORT_DETAILS),
+              onTap: () => Get.toNamed(Routes.TRANSPORT_DETAILS, arguments: {
+                "Images": Images,
+                "title": title,
+                "description": description,
+                "seats": seatsCount,
+                "speed": speed,
+                "riders": rdiersCount,
+                "features": features,
+                "routes": routes,
+                "busId": busId,
+              }),
               child: const Center(
                   child: Button(
                 title: "عرض التفاصيل",

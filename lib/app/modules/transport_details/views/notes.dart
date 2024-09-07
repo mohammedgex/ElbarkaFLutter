@@ -8,9 +8,11 @@ import 'package:get/get.dart';
 import '../controllers/transport_details_controller.dart';
 
 class NotesView extends GetView<TransportDetailsController> {
-  const NotesView({Key? key}) : super(key: key);
+  const NotesView({super.key});
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
+    print(args["amountSR"]);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -89,6 +91,7 @@ class NotesView extends GetView<TransportDetailsController> {
                                     "${index + 1}",
                                     style: const TextStyle(
                                         fontSize: 20,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.w600),
                                   )),
                                 ),
@@ -109,12 +112,16 @@ class NotesView extends GetView<TransportDetailsController> {
                       ),
                     ),
                     InkWell(
-                      onTap: () => Get.toNamed(Routes.PAYMENTMETHODS),
+                      onTap: () => Get.toNamed(Routes.RESERVATION, arguments: {
+                        "selectedRouteId": args["selectedRouteId"],
+                        "busId": args["busId"],
+                        "amountSR": args["amountSR"]
+                      }),
                       child: const Button(
                         title: "فهمت ذلك",
                         Btncolor: appColors.secondColor,
                         raduis: 12,
-                        Txtcolor: Colors.black,
+                        Txtcolor: Colors.white,
                       ),
                     )
                   ],

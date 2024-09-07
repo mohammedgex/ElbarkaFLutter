@@ -7,26 +7,15 @@ import 'package:get/get.dart';
 import '../controllers/signup_controller.dart';
 
 class VerifyAccount extends GetView<SignupController> {
-  const VerifyAccount({Key? key}) : super(key: key);
+  VerifyAccount({super.key});
+
+  final dataFromSignup = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        // appBar: AppBar(
-        //   backgroundColor: appColors.secondColor,
-        //   elevation: 0,
-        //   scrolledUnderElevation: 0,
-        //   title: const Text(
-        //     'تأكيد الحساب',
-        //     style: TextStyle(
-        //         fontSize: 26,
-        //         fontFamily: Appfonts.boldFont,
-        //         color: Colors.white),
-        //   ),
-        //   centerTitle: true,
-        // ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 60.0, horizontal: 24),
+          padding: const EdgeInsets.symmetric(vertical: 60.0, horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -46,40 +35,38 @@ class VerifyAccount extends GetView<SignupController> {
                 height: 20,
               ),
               OtpTextField(
-                numberOfFields: 4,
-                fieldWidth: 50,
-                borderWidth: 2,
+                numberOfFields: 6,
+                fieldWidth: 40,
+                borderWidth: 1.5,
                 autoFocus: true,
                 fieldHeight: 50,
                 borderColor: appColors.borderColor,
                 focusedBorderColor: appColors.mainColor,
                 enabledBorderColor: appColors.borderColor,
                 //set to true to show as box or false to show as dash
-                showFieldAsBox: true,
+                showFieldAsBox: false,
                 //runs when a code is typed in
                 onCodeChanged: (String code) {
                   //handle validation or checks here
                 },
                 //runs when every textfield is filled
                 onSubmit: (String verificationCode) {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text("Verification Code"),
-                          content: Text('Code entered is $verificationCode'),
-                        );
-                      });
+                  controller.otpCode = verificationCode;
                 }, // end onSubmit
               ),
               const SizedBox(
                 height: 20,
               ),
-              const Button(
-                title: "تأكيد",
-                raduis: 16,
-                Btncolor: appColors.secondColor,
-              ),
+              Obx(() => InkWell(
+                    onTap: () => controller.verifyOtp(dataFromSignup["phone"]),
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator()
+                        : const Button(
+                            title: "تأكيد",
+                            raduis: 16,
+                            Btncolor: appColors.secondColor,
+                          ),
+                  )),
               const SizedBox(height: 20),
             ],
           ),

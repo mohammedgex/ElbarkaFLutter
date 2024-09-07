@@ -10,7 +10,7 @@ dependencies:
   get: 4.6.6
   flutter: 
     sdk: flutter
-  image_picker: ^1.0.7
+  image_picker: ^1.1.2
   flutter_svg: ^2.0.10+1
   get_storage: ^2.1.1	
   smooth_page_indicator: ^1.2.0+3
@@ -75,27 +75,27 @@ flutter:
     #     - asset: assets/fonts/ArabotoLight.ttf
     - family: cairo
       fonts:
-        - asset: assets/cairoFont/Cairo-Regular.ttf
+        - asset: assets/somar.ttf
 
     - family: cairoLight
       fonts:
-        - asset: assets/cairoFont/Cairo-Light.ttf
+        - asset: assets/Somar-Regular.ttf
 
     - family: cairoMedium
       fonts:
-        - asset: assets/cairoFont/Cairo-Medium.ttf
+        - asset: assets/somar-Bold.ttf
 
-    - family: cairoBold
-      fonts:
-        - asset: assets/cairoFont/Cairo-Bold.ttf
+    # - family: cairoBold
+    #   fonts:
+    #     - asset: assets/cairoFont/Cairo-Bold.ttf
         
-    - family: joseFine
-      fonts:
-        - asset: assets/JosefinSans-Bold.ttf
+    # - family: joseFine
+    #   fonts:
+    #     - asset: assets/JosefinSans-Bold.ttf
 
-    - family: tajawal-Bold
-      fonts:
-        - asset: assets/tajwal/Tajawal-Bold.ttf
+    # - family: tajawal-Bold
+    #   fonts:
+    #     - asset: assets/tajwal/Tajawal-Bold.ttf
 
     # - family: madani
     #   fonts:

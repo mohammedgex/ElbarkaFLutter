@@ -8,14 +8,26 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconly/iconly.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../controllers/transport_details_controller.dart';
+import 'package:baraka_trans/app/data/tranportaionModel.dart';
 
 class TransportDetailsView extends GetView<TransportDetailsController> {
-  const TransportDetailsView({Key? key}) : super(key: key);
+  const TransportDetailsView({super.key});
   @override
   Widget build(BuildContext context) {
+    final transData = Get.arguments;
+    final List<String> features = transData["features"] ?? [];
+    final List<transRoutes> routes = transData["routes"] ?? [];
+    controller.routes = routes;
+    final List<String> images = transData["Images"] ?? [];
+    final String title = transData["title"] ?? '';
+    final int busId = transData["busId"] ?? 1;
+    final String description = transData["description"] ?? '';
+    final String seats = transData["seats"] ?? '';
+    final String speed = transData["speed"] ?? '';
+    final String riders = transData["riders"] ?? '';
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -27,7 +39,7 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
               Stack(
                 children: [
                   CarouselSlider(
-                    items: controller.imgList
+                    items: images
                         .map((item) => Container(
                               width: double.infinity,
                               decoration: BoxDecoration(boxShadow: const [
@@ -39,7 +51,8 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                               ], borderRadius: BorderRadius.circular(6)),
                               child: FancyShimmerImage(
                                 boxFit: BoxFit.cover,
-                                imageUrl: item,
+                                imageUrl:
+                                    "http://192.168.1.80:8000/uploads/$item",
                               ),
                             ))
                         .toList(),
@@ -112,7 +125,7 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
               Obx(() => Center(
                     child: AnimatedSmoothIndicator(
                       activeIndex: controller.current.value,
-                      count: controller.imgList.length,
+                      count: images.length,
                       effect: const ExpandingDotsEffect(
                         dotHeight: 6,
                         dotWidth: 6,
@@ -154,8 +167,8 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                                   ),
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image:
-                                        NetworkImage(controller.imgList[index]),
+                                    image: NetworkImage(
+                                        "http://192.168.1.80:8000/uploads/${images[index]}"),
                                   ),
                                 ),
                               );
@@ -167,30 +180,30 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                             width: 8,
                           );
                         },
-                        itemCount: controller.imgList.length),
+                        itemCount: images.length),
                   )),
               const SizedBox(
                 height: 8,
               ),
-              const Padding(
-                padding: EdgeInsets.all(10),
+              Padding(
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "هذا النص هو مثال لنص يمكن",
-                      style: TextStyle(
+                      title,
+                      style: const TextStyle(
                           fontFamily: Appfonts.meduimFont,
                           color: appColors.secondColor,
                           fontSize: 16),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 4,
                     ),
                     Text(
-                      "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.",
-                      style: TextStyle(
+                      description,
+                      style: const TextStyle(
                           fontFamily: Appfonts.mainFont,
                           color: appColors.textColor,
                           fontSize: 12),
@@ -213,19 +226,19 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                     const SizedBox(
                       height: 8,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         feature(
-                          text: "50 مقعد",
+                          text: "$seats مقعد",
                           svg_url: "assets/seats.svg",
                         ),
                         feature(
-                          text: "165 كم/س",
+                          text: "$speed كم/س",
                           svg_url: "assets/speed.svg",
                         ),
                         feature(
-                          text: "45 راكب",
+                          text: "$riders راكب",
                           svg_url: "assets/persons.svg",
                         )
                       ],
@@ -238,7 +251,8 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 8),
                         width: double.infinity,
                         height: 250,
                         decoration: BoxDecoration(
@@ -249,31 +263,39 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ...List.generate(5, (index) {
-                              return const Row(
+                            ...List.generate(features.length, (index) {
+                              return Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Row(
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Icon(
-                                        IconlyLight.tick_square,
-                                        color: appColors.secondColor,
+                                      const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                        size: 18,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 4,
                                       ),
-                                      Text("تبريد/تسخين",
-                                          style: TextStyle(
+                                      Text(features[index],
+                                          style: const TextStyle(
                                               fontSize: 12,
                                               color: appColors.textColor,
                                               fontFamily: Appfonts.mainFont)),
                                     ],
                                   ),
-                                  Text(
+                                  const Text(
                                     "متوفر",
                                     style: TextStyle(
+                                        color: Colors.green,
                                         fontFamily: Appfonts.meduimFont),
                                   )
                                 ],
@@ -285,52 +307,154 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                     ),
                     // =============== اختيار المسارات
                     InkWell(
-                      onTap: () => Get.bottomSheet(
-                          Container(
-                            width: double.infinity,
-                            height: 400,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16)),
-                            child: Column(
+                      onTap: () {
+                        Get.bottomSheet(
+                            exitBottomSheetDuration:
+                                const Duration(milliseconds: 250),
+                            Column(
                               children: [
                                 Expanded(
-                                  child: ListView.builder(
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: controller.routes.length,
-                                    itemBuilder: (context, i) {
-                                      return Obx(() => Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: InkWell(
-                                              onTap: () =>
-                                                  controller.select_Route(i),
-                                              child: MyRotue(
-                                                isSelected: controller
-                                                        .Is_Selected.value ==
-                                                    i,
-                                                routeName: controller.routes[i]
-                                                    ['routeName'],
-                                                price: controller.routes[i]
-                                                    ['price'],
-                                              ),
-                                            ),
-                                          ));
-                                    },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(12),
+                                          topRight: Radius.circular(12)),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        ...List.generate(
+                                            controller.routeCategory.length,
+                                            (index) {
+                                          return GestureDetector(
+                                              onTap: () => controller
+                                                  .selectedRouteTyp
+                                                  .value = index,
+                                              child: Obx(
+                                                () => AnimatedContainer(
+                                                  duration: const Duration(
+                                                      milliseconds:
+                                                          300), // Animation duration
+
+                                                  width: 120,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      color: controller
+                                                                  .selectedRouteTyp
+                                                                  .value ==
+                                                              index
+                                                          ? appColors
+                                                              .secondColor
+                                                          : appColors
+                                                              .borderColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12)),
+                                                  child: Center(
+                                                    child: Text(
+                                                      controller
+                                                          .routeCategory[index],
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                          fontFamily: Appfonts
+                                                              .meduimFont),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ));
+                                        }),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: () => Get.toNamed(Routes.NOTES),
-                                  child: const Button(
-                                    title: "تأكيد المسار",
+                                Expanded(
+                                  flex: 8,
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 400,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(16)),
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: ListView.builder(
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            itemCount: routes.length,
+                                            itemBuilder: (context, i) {
+                                              return Obx(() => Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        controller
+                                                            .select_Route(i);
+                                                        controller
+                                                                .selectedRoute =
+                                                            routes[controller
+                                                                .Is_Selected
+                                                                .value];
+                                                      },
+                                                      child: MyRotue(
+                                                        isSelected: controller
+                                                                .Is_Selected
+                                                                .value ==
+                                                            i,
+                                                        routeName: routes[i]
+                                                            .name
+                                                            .toString(),
+                                                        price:
+                                                            "${routes[i].pivot!.price.toString()} ريال",
+                                                      ),
+                                                    ),
+                                                  ));
+                                            },
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            Get.toNamed(
+                                                controller.selectedRoute!
+                                                            .type ==
+                                                        "قطعة"
+                                                    ? Routes.MY_PAYMENTS
+                                                    : Routes.NOTES,
+                                                arguments: {
+                                                  "selectedRouteId": controller
+                                                      .selectedRoute!.id,
+                                                  "busId": busId,
+                                                  "amountSR": controller
+                                                      .selectedRoute!
+                                                      .pivot!
+                                                      .price!
+                                                      .toDouble(),
+                                                  "routeType": controller
+                                                      .selectedRoute!.type
+                                                });
+                                          },
+                                          child: const Button(
+                                            title: "تأكيد المسار",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          backgroundColor: Colors.white,
-                          enterBottomSheetDuration:
-                              const Duration(milliseconds: 200),
-                          elevation: 1),
+                            backgroundColor: Colors.white,
+                            enterBottomSheetDuration:
+                                const Duration(milliseconds: 500),
+                            elevation: 1);
+                        controller.InitalRoute();
+                      },
                       child: Center(
                         child: Container(
                           width: MediaQuery.of(context).size.width * .9,

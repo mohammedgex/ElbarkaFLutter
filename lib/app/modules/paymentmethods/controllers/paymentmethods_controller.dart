@@ -1,3 +1,4 @@
+import 'package:baraka_trans/utilits/auth.dart';
 import 'package:baraka_trans/utilits/paymob_manager.dart';
 import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,13 @@ class PaymentmethodsController extends GetxController
     with SingleGetTickerProviderMixin {
   String? paymentKey;
   final Timecontroller = BoardDateTimeTextController();
+  RxBool isLoading = false.obs;
+  final AuthRepository _authRepository = AuthRepository();
+
+  // api fields
+  double? amountEGP;
+  double? amountSR;
+  int? reservationId;
 
   // animation
   late AnimationController animationController;
@@ -26,7 +34,6 @@ class PaymentmethodsController extends GetxController
 
   @override
   void onInit() {
-    pay();
     print(paymentKey);
     super.onInit();
     animationController = AnimationController(
@@ -50,8 +57,21 @@ class PaymentmethodsController extends GetxController
   ];
 
   Future<void> pay() async {
-    PaymobManager().getPaymentKey(100000, "EGP").then((String value) {
+    PaymobManager()
+        .getPaymentKey(amountEGP! * 13.5, "EGP")
+        .then((String value) {
       paymentKey = value;
     });
+  }
+
+  void payWithCard() async {
+    try {
+      final result = await _authRepository.payWithCard(1, amountEGP! * 13.5);
+      if (result["success"]) {
+        print("success");
+      } else {}
+    } catch (e) {
+      print("erro $e");
+    }
   }
 }

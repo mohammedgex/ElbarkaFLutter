@@ -1,4 +1,3 @@
-import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +107,7 @@ Widget button(BuildContext context) {
       child: TextButton(
         onPressed: () {
           if (control.currentIndex.value == control.items.length - 1) {
-            Get.offAllNamed(Routes.HOME);
+            control.doneButton();
           } else {
             control.pageController.nextPage(
                 duration: const Duration(milliseconds: 500),

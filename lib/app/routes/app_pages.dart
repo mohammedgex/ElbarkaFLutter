@@ -1,4 +1,3 @@
-import 'package:baraka_trans/app/modules/paymentmethods/views/paymentStatus.dart';
 import 'package:get/get.dart';
 
 import '../modules/ChatSupport/bindings/chat_support_binding.dart';
@@ -10,6 +9,8 @@ import '../modules/Login/views/login_view.dart';
 import '../modules/Signup/bindings/signup_binding.dart';
 import '../modules/Signup/views/signup_view.dart';
 import '../modules/Signup/views/verify_account.dart';
+import '../modules/checkout/bindings/checkout_binding.dart';
+import '../modules/checkout/views/checkout_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/main/bindings/main_binding.dart';
@@ -31,6 +32,7 @@ import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/paymentmethods/bindings/paymentmethods_binding.dart';
 import '../modules/paymentmethods/views/PaymobPaymentView.dart';
 import '../modules/paymentmethods/views/Self_payment.dart';
+import '../modules/paymentmethods/views/paymentStatus.dart';
 import '../modules/paymentmethods/views/paymentmethods_view.dart';
 import '../modules/paymentmethods/views/personPaymentView.dart';
 import '../modules/reservation/bindings/reservation_binding.dart';
@@ -47,14 +49,15 @@ class AppPages {
   AppPages._();
 
   static const INITIAL = Routes.LOGIN;
+  static const HOME = Routes.HOME;
   static const ONBOARDING = Routes.ONBOARDING;
 
   static final routes = [
     GetPage(
-        name: _Paths.HOME,
-        page: () => const HomeView(),
-        binding: HomeBinding(),
-        transition: Transition.cupertino),
+      name: _Paths.HOME,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+    ),
     GetPage(
         name: _Paths.NOTES,
         page: () => const NotesView(),
@@ -62,7 +65,7 @@ class AppPages {
         transition: Transition.cupertino),
     GetPage(
       name: _Paths.MAIN,
-      page: () => MainView(),
+      page: () => const MainView(),
       binding: MainBinding(),
     ),
     GetPage(
@@ -132,7 +135,7 @@ class AppPages {
         transition: Transition.noTransition),
     GetPage(
         name: _Paths.VERIFYACCOUNT,
-        page: () => const VerifyAccount(),
+        page: () => VerifyAccount(),
         binding: SignupBinding(),
         transition: Transition.noTransition),
     GetPage(
@@ -164,6 +167,11 @@ class AppPages {
       name: _Paths.SAVED_TRANSPORTATIONS,
       page: () => const SavedTransportationsView(),
       binding: SavedTransportationsBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHECKOUT,
+      page: () => const CheckoutView(),
+      binding: CheckoutBinding(),
     ),
   ];
 }

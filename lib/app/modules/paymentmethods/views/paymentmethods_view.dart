@@ -3,15 +3,20 @@ import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/paymentmethods_controller.dart';
 
 class PaymentmethodsView extends GetView<PaymentmethodsController> {
-  const PaymentmethodsView({Key? key}) : super(key: key);
+  const PaymentmethodsView({super.key});
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
+    controller.reservationId = args["reservationId"];
+    controller.amountEGP = args["amountEGP"];
+    controller.amountSR = args["amountSR"];
+    print(args["reservationId"]);
+    controller.pay();
+
     return Scaffold(
         appBar: AppBar(
           title: const Text(

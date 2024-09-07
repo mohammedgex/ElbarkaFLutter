@@ -26,6 +26,7 @@ abstract class Routes {
   static const PERSON_PAYMENT = _Paths.PERSON_PAYMENT;
   static const SAVED_TRANSPORTATIONS = _Paths.SAVED_TRANSPORTATIONS;
   static const PAYMENT_STATUS = _Paths.PAYMENT_STATUS;
+  static const CHECKOUT = _Paths.CHECKOUT;
 }
 
 abstract class _Paths {
@@ -53,4 +54,5 @@ abstract class _Paths {
   static const PERSON_PAYMENT = '/person-payment';
   static const SAVED_TRANSPORTATIONS = '/saved-transportations';
   static const PAYMENT_STATUS = '/payment-status';
+  static const CHECKOUT = '/checkout';
 }

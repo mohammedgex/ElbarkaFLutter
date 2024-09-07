@@ -1,3 +1,4 @@
+import 'package:baraka_trans/app/modules/main/controllers/main_controller.dart';
 import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
@@ -11,6 +12,7 @@ class MyprofileView extends GetView<MyprofileController> {
   const MyprofileView({super.key});
   @override
   Widget build(BuildContext context) {
+    final MainController mainController = Get.put(MainController());
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -31,18 +33,18 @@ class MyprofileView extends GetView<MyprofileController> {
                     height: 120,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(500),
-                        image: const DecorationImage(
+                        image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                "https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg"))),
+                                "http://192.168.1.80:8000/uploads/${mainController.userData.value.image}"))),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
                   // username
-                  const Text(
-                    "Nada Ali",
-                    style: TextStyle(fontSize: 16),
+                  Text(
+                    mainController.userData.value.name,
+                    style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(
                     height: 45,

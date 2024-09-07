@@ -47,10 +47,11 @@ class ForgetpasswordView extends GetView<ForgetpasswordController> {
               const SizedBox(
                 height: 30,
               ),
-              const textField(
+              textField(
                 hint_text: "رقم الهاتف الخاص بك",
+                textFieldController: controller.phoneController,
                 type: TextInputType.number,
-                icon: Icon(
+                icon: const Icon(
                   IconlyLight.call,
                   color: appColors.secondColor,
                 ),
@@ -58,11 +59,16 @@ class ForgetpasswordView extends GetView<ForgetpasswordController> {
               const SizedBox(
                 height: 50,
               ),
-              const Button(
-                title: "ارسال رمز",
-                raduis: 16,
-                Btncolor: appColors.secondColor,
-              ),
+              Obx(() => GestureDetector(
+                    onTap: () => controller.forgetPassword(),
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator()
+                        : const Button(
+                            title: "ارسال رمز",
+                            raduis: 16,
+                            Btncolor: appColors.secondColor,
+                          ),
+                  )),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

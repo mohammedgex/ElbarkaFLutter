@@ -1,6 +1,6 @@
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:iconly/iconly.dart';
 
 class bottom_NavigationBar extends StatelessWidget {
   const bottom_NavigationBar({
@@ -21,37 +21,37 @@ class bottom_NavigationBar extends StatelessWidget {
       selectedIndex: controller.currentPage.value,
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       elevation: 1,
-      destinations: [
+      destinations: const [
         NavigationDestination(
-          icon: SvgPicture.asset(
-            "assets/icons/home_Icon.svg",
+          icon: Icon(
+            IconlyLight.home,
             color: appColors.mainColor,
           ),
-          label: "",
-          selectedIcon: SvgPicture.asset(
-            "assets/icons/home_Icon.svg",
+          label: "الرئيسية",
+          selectedIcon: Icon(
+            IconlyLight.home,
             color: appColors.secondColor,
           ),
         ),
         NavigationDestination(
-          icon: SvgPicture.asset(
-            "assets/icons/book.svg",
+          icon: Icon(
+            IconlyLight.bookmark,
             color: appColors.mainColor,
           ),
-          label: "",
-          selectedIcon: SvgPicture.asset(
-            "assets/icons/book.svg",
+          label: "الحجوزات",
+          selectedIcon: Icon(
+            IconlyLight.bookmark,
             color: appColors.secondColor,
           ),
         ),
         NavigationDestination(
-          icon: SvgPicture.asset(
-            "assets/icons/profile_Icon.svg",
+          icon: Icon(
+            IconlyLight.profile,
             color: appColors.mainColor,
           ),
-          label: "",
-          selectedIcon: SvgPicture.asset(
-            "assets/icons/profile_Icon.svg",
+          label: "البروفايل",
+          selectedIcon: Icon(
+            IconlyLight.profile,
             color: appColors.secondColor,
           ),
         ),

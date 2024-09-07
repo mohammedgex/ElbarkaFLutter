@@ -4,13 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
 class PaymentOperation extends StatelessWidget {
-  const PaymentOperation({super.key, this.cashAmount, this.date});
+  const PaymentOperation(
+      {super.key, this.cashAmount, this.date, this.paymentMethod});
 
   final String? cashAmount;
   final String? date;
+  final String? paymentMethod;
 
   @override
   Widget build(BuildContext context) {
+    String extractDate(String dateTimeString) {
+      // Parse the DateTime string
+      DateTime dateTime = DateTime.parse(dateTimeString);
+
+      // Format the DateTime to only include the date (YYYY-MM-DD)
+      String formattedDate =
+          "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}";
+
+      return formattedDate;
+    }
+
     return Container(
       padding: const EdgeInsets.all(12),
       height: 80,
@@ -46,13 +59,17 @@ class PaymentOperation extends StatelessWidget {
             width: 70,
             height: 25,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8), 
+              borderRadius: BorderRadius.circular(8),
               color: appColors.mainColor,
             ),
-            child: const Center(
+            child: Center(
                 child: Text(
-              "دفع يدوي",
-              style: TextStyle(
+              paymentMethod! == "card"
+                  ? "دفع بالكارت"
+                  : paymentMethod == "manual"
+                      ? "دفع يدوي"
+                      : "خطأ",
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                   fontFamily: Appfonts.boldFont),
@@ -69,7 +86,7 @@ class PaymentOperation extends StatelessWidget {
                 style: const TextStyle(fontFamily: Appfonts.boldFont),
               ),
               Text(
-                date!,
+                extractDate(date!),
                 style:
                     const TextStyle(fontSize: 12, color: appColors.textColor),
               ),

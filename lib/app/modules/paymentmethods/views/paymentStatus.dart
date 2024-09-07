@@ -12,6 +12,8 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
   });
 
   final statusType = Get.arguments["paymentStatus"];
+
+  final now = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,36 +91,36 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
                         ),
                       ],
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "المبلغ بالجنية :",
                           style: TextStyle(
                               fontSize: 12, fontFamily: Appfonts.mainFont),
                         ),
                         Text(
-                          "40000 جنية",
-                          style: TextStyle(
+                          "${controller.amountEGP! * 13.5} جنية",
+                          style: const TextStyle(
                               fontFamily: Appfonts.meduimFont,
                               fontSize: 13,
                               color: appColors.secondColor),
                         ),
                       ],
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "المبلغ بالريال :",
                           style: TextStyle(
                               fontSize: 12, fontFamily: Appfonts.mainFont),
                         ),
                         Text(
-                          "2000 ريال",
-                          style: TextStyle(
+                          "${controller.amountSR} ريال",
+                          style: const TextStyle(
                               fontFamily: Appfonts.meduimFont,
                               fontSize: 13,
                               color: appColors.secondColor),
@@ -126,19 +128,19 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
                       ],
                     ),
                     statusType!
-                        ? const Row(
+                        ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "تاريخ الدفع :",
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontFamily: Appfonts.mainFont),
                               ),
                               Text(
-                                "15/06/2024",
-                                style: TextStyle(
+                                "$now",
+                                style: const TextStyle(
                                     fontFamily: Appfonts.meduimFont,
                                     fontSize: 13,
                                     color: appColors.secondColor),
@@ -152,7 +154,7 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
             ),
             const Expanded(child: SizedBox()),
             InkWell(
-              onTap: () => Get.offAllNamed(Routes.RESERVATION),
+              onTap: () => Get.offAllNamed(Routes.HOME),
               child: const Button(
                 Btncolor: appColors.secondColor,
                 title: "الرجوع للرئيسية",

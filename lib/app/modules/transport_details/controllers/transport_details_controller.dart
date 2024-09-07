@@ -1,10 +1,18 @@
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:baraka_trans/app/data/tranportaionModel.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:get/get.dart';
 
 class TransportDetailsController extends GetxController {
   RxInt current = 0.obs;
   RxInt Is_Selected = 0.obs;
+  RxInt selectedRouteTyp = 0.obs;
   final CarouselController carousel_controller = CarouselController();
+
+  transRoutes? selectedRoute;
+
+  final List<String> routeCategory = ["الدورات", "الوصلات"];
 
   final List<String> imgList = [
     'https://lh6.googleusercontent.com/proxy/wZEV_kzxqLoFZ8bNWCSK1hhdTHG2jHyXAwSAAlnL2wi4Y12eRls7AHZGw63AXALRZQ8y40PKc0vZ3IHNdDh3jgEnvHHP00kqouoSVhJ7ovoIFVvZ',
@@ -15,19 +23,7 @@ class TransportDetailsController extends GetxController {
     'https://urda-lb.org/wp-content/uploads/2021/01/11.jpg',
   ];
 
-  final List<Map<String, String>> routes = [
-    {"routeName": "مكة - المطار - جدة - المطار", "price": "2200 ر.س"},
-    {"routeName": "جدة - المطار - مكة - الفندق", "price": "3000 ر.س"},
-    {"routeName": "جدة - المطار - مكة - الفندق", "price": "3000 ر.س"},
-    {"routeName": "جدة - المطار - مكة - الفندق", "price": "3000 ر.س"},
-    {"routeName": "مكة - المطار - جدة - المطار", "price": "2200 ر.س"},
-    {"routeName": "مكة - المطار - جدة - المطار", "price": "2200 ر.س"},
-    {"routeName": "مكة - المطار - جدة - المطار", "price": "2200 ر.س"},
-    {"routeName": "مكة - المطار - جدة - المطار", "price": "2200 ر.س"},
-    {"routeName": "مكة - المطار - جدة - المطار", "price": "2200 ر.س"},
-
-    // Add more routes here
-  ];
+  List<transRoutes> routes = [];
 
   void chng(int index) {
     current.value = index;
@@ -35,5 +31,9 @@ class TransportDetailsController extends GetxController {
 
   void select_Route(int index) {
     Is_Selected.value = index;
+  }
+
+  void InitalRoute() {
+    selectedRoute = routes[0];
   }
 }
