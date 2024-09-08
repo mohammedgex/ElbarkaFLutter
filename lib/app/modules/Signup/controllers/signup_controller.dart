@@ -48,10 +48,7 @@ class SignupController extends GetxController {
     final name = nameController.text.trim();
     final phone = phoneController.text.trim();
     final email = emailController.text.trim();
-    final birthdate = birthdateController.text.trim();
-    final passportNumber = passportNumberController.text.trim();
     final password = passwordController.text.trim();
-    final country = countryController.text.trim();
     final image = imageFile; // Assuming imageFile is a File object
 
     try {
@@ -59,10 +56,7 @@ class SignupController extends GetxController {
         name: name,
         phone: phone,
         email: email,
-        birthdate: birthdate,
-        passportNumber: passportNumber,
         password: password,
-        country: country,
         image: image!.value,
       );
 

@@ -77,7 +77,7 @@ class ReservationController extends GetxController {
       // success
       if (result["success"]) {
         isLoading.value = false;
-        reservationId = jsonDecode(result["reservation"]["id"]);
+        reservationId = result["reservation"]["id"];
         print("IDD $reservationId");
         pageController.nextPage(
           duration: const Duration(milliseconds: 300),
@@ -100,7 +100,9 @@ class ReservationController extends GetxController {
     try {
       final result = await _authRepository.storeArrivalDeparture(
           reservationId!,
-          isArrival ? selectedDate! : deptureSelectedDate!,
+          isArrival
+              ? selectedDate!.toString()
+              : deptureSelectedDate!.toString(),
           isArrival ? selectedTime.toString() : deptureSelectedTime.toString(),
           isArrival ? arrivalAirLinesNumber! : DeptureAirLinesNumber!,
           isArrival ? arrivalAirLinesName! : DeptureAirLinesName!,
@@ -108,12 +110,17 @@ class ReservationController extends GetxController {
       // success
       if (result["success"]) {
         isLoading.value = false;
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.slowMiddle,
+        );
         print('doneeeeeeeeeeeee');
       } else {
         print("failed");
         isLoading.value = false;
       }
     } catch (e) {
+      print(e);
       isLoading.value = false;
     }
   }
@@ -125,9 +132,11 @@ class ReservationController extends GetxController {
     try {
       final result = await _authRepository.storeVisit(
         reservationId!,
-        isMecca ? meccaVisitSelectedDate! : maddinaVisitSelectedDate!,
+        isMecca
+            ? meccaVisitSelectedDate!.toString()
+            : maddinaVisitSelectedDate!.toString(),
         isMecca ? MeccaFrom.toString() : maddinaFrom.toString(),
-        isMecca ? MeccaFrom.toString() : maddinaTo.toString(),
+        isMecca ? MeccaTo.toString() : maddinaTo.toString(),
         isMecca
             ? meccaVisitSelectedTime.toString()
             : maddinaVisitSelectedTime.toString(),
@@ -138,6 +147,10 @@ class ReservationController extends GetxController {
       // success
       if (result["success"]) {
         isLoading.value = false;
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.slowMiddle,
+        );
       } else {
         print("failed");
         isLoading.value = false;

@@ -174,11 +174,8 @@ class ArrivalReservationView extends GetView<ReservationController> {
                 InkWell(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      // controller.arivalDepture(true);
-                      controller.pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.slowMiddle,
-                      );
+                      controller.arivalDepture(true);
+                      
                     }
                   },
                   child: const Button(

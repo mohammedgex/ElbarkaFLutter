@@ -138,54 +138,6 @@ class SignupView extends GetView<SignupController> {
                       height: 12,
                     ),
                     textField(
-                      hint_text: "تاريخ الميلاد",
-                      textFieldController: controller.birthdateController,
-                      type: TextInputType.text,
-                      icon: const Icon(
-                        IconlyLight.calendar,
-                        color: appColors.secondColor,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    textField(
-                      hint_text: "رقم جواز السفر",
-                      textFieldController: controller.passportNumberController,
-                      validation: (value) {
-                        if (value!.length >= 8) {
-                          return null;
-                        }
-                        return "رقم الهاتف غير صحيح.";
-                      },
-                      type: TextInputType.text,
-                      icon: const Icon(
-                        IconlyLight.paper_negative,
-                        color: appColors.secondColor,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    textField(
-                      hint_text: "اسم المدينة",
-                      textFieldController: controller.countryController,
-                      validation: (value) {
-                        if (value!.isNotEmpty) {
-                          return null;
-                        }
-                        return "يرجي كتابة المدينة";
-                      },
-                      type: TextInputType.text,
-                      icon: const Icon(
-                        IconlyLight.location,
-                        color: appColors.secondColor,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    textField(
                       hint_text: "كلمة المرور الخاصة بك",
                       textFieldController: controller.passwordController,
                       validation: (value) {

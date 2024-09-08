@@ -70,7 +70,7 @@ class AuthRepository {
   // storeArrivalDeparture
   Future<Map<String, dynamic>> storeArrivalDeparture(
     int reservation_id,
-    DateTime date,
+    String date,
     String time,
     String flight_number,
     String airline,
@@ -124,7 +124,7 @@ class AuthRepository {
   // storeVisit
   Future<Map<String, dynamic>> storeVisit(
     int reservation_id,
-    DateTime visit_date,
+    String visit_date,
     String from_place,
     String to_place,
     String movement_time,
@@ -154,10 +154,7 @@ class AuthRepository {
     required String name,
     required String phone,
     required String email,
-    required String birthdate,
-    required String passportNumber,
     required String password,
-    required String country,
     required File image,
   }) async {
     final url = Uri.parse('${_apiService.baseUrl}register');
@@ -170,10 +167,7 @@ class AuthRepository {
     request.fields['name'] = name;
     request.fields['phone'] = phone;
     request.fields['email'] = email;
-    request.fields['birthdate'] = birthdate;
-    request.fields['passport_number'] = passportNumber;
     request.fields['password'] = password;
-    request.fields['country'] = country;
 
     // Adding image file
     request.files.add(await http.MultipartFile.fromPath('image', image.path));

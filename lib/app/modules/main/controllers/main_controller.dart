@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:baraka_trans/app/data/categoryModel.dart';
 import 'package:baraka_trans/app/data/tranportaionModel.dart';
 import 'package:baraka_trans/app/data/user_model.dart';
 import 'package:baraka_trans/utilits/api_service.dart';
@@ -11,20 +12,7 @@ class MainController extends GetxController {
   TextEditingController riders_number = TextEditingController();
   final ApiService _apiService = ApiService();
   RxBool? isloading = false.obs;
-
-  // ============
-  List<String> Categories = [
-    "الكل",
-    "ميني باص",
-    "باص كبير",
-  ];
-
-  List<String> busFeatures = [
-    "مكيف",
-    "شحن USB",
-    "نظام تهوية",
-    "دورة مياه",
-  ];
+  RxString selectedCategory = 'الكل'.obs;
 
   List<String> busProperties = [
     "راكب",
@@ -42,11 +30,9 @@ class MainController extends GetxController {
     id: 0,
     name: '',
     phone: '',
-    birthdate: '',
-    passportNumber: '',
-    country: '',
     email: '',
-    isActive: 0,
+    isActive: 1,
+    isBlocked: 0,
     image: '',
     createdAt: '',
     updatedAt: '',
@@ -87,5 +73,36 @@ class MainController extends GetxController {
     return transportationList;
   }
 
-  
+  Future<List> fetchCategories() async {
+    List<Category> categoriesList = []; // List of transportation models
+
+    try {
+      final response = await _apiService.get('categories');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        categoriesList = data.map((item) => Category.fromJson(item)).toList();
+      }
+    } catch (e) {
+      // Handle errors
+      print('Failed to fetch transportation data: $e');
+    }
+    return categoriesList;
+  }
+
+  Future<List> fetchTransportationsById(int id) async {
+    List<tranportaionModel> transportationsList = [];
+
+    try {
+      final response = await _apiService.get('categories/$id');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        transportationsList =
+            data.map((item) => tranportaionModel.fromJson(item)).toList();
+      }
+    } catch (e) {
+      // Handle errors
+      print('Failed to fetch transportation data: $e');
+    }
+    return transportationsList;
+  }
 }

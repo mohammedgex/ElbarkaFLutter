@@ -10,7 +10,7 @@ import 'package:iconly/iconly.dart';
 import '../controllers/reservation_controller.dart';
 
 class DeptureReservationView extends GetView<ReservationController> {
-  const DeptureReservationView({Key? key}) : super(key: key);
+  const DeptureReservationView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -174,11 +174,7 @@ class DeptureReservationView extends GetView<ReservationController> {
                 InkWell(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      // controller.arivalDepture(false);
-                      controller.pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.slowMiddle,
-                      );
+                      controller.arivalDepture(false);
                     }
                   },
                   child: const Button(

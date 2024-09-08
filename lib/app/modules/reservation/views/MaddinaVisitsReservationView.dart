@@ -174,7 +174,7 @@ class MaddinaVisitsReservationView extends GetView<ReservationController> {
                 InkWell(
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
-                      // controller.visits(false);
+                      controller.visits(false);
                       Get.offAllNamed(Routes.PAYMENTMETHODS, arguments: {
                         "reservationId": controller.reservationId,
                         "amountEGP": controller.amountSR!,

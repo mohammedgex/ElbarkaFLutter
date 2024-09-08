@@ -173,10 +173,7 @@ class MeccaVisitsReservationView extends GetView<ReservationController> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       controller.visits(true);
-                      controller.pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.slowMiddle,
-                      );
+                      
                     }
                   },
                   child: const Button(

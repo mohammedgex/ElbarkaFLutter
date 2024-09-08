@@ -4,6 +4,7 @@ import 'package:baraka_trans/consts/fonts.dart';
 import 'package:baraka_trans/utilits/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../controllers/paymentmethods_controller.dart';
 
 class PaymentStatusView extends GetView<PaymentmethodsController> {
@@ -100,13 +101,15 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
                           style: TextStyle(
                               fontSize: 12, fontFamily: Appfonts.mainFont),
                         ),
-                        Text(
-                          "${controller.amountEGP! * 13.5} جنية",
-                          style: const TextStyle(
-                              fontFamily: Appfonts.meduimFont,
-                              fontSize: 13,
-                              color: appColors.secondColor),
-                        ),
+                        controller.amountEGP! != null
+                            ? Text(
+                                "${controller.amountEGP! * 13.5} جنية",
+                                style: const TextStyle(
+                                    fontFamily: Appfonts.meduimFont,
+                                    fontSize: 13,
+                                    color: appColors.secondColor),
+                              )
+                            : SizedBox(),
                       ],
                     ),
                     Row(
@@ -139,7 +142,7 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
                                     fontFamily: Appfonts.mainFont),
                               ),
                               Text(
-                                "$now",
+                                DateFormat('yyyy-MM-dd').format(now),
                                 style: const TextStyle(
                                     fontFamily: Appfonts.meduimFont,
                                     fontSize: 13,

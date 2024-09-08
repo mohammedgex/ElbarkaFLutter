@@ -34,6 +34,9 @@ class NotificationsView extends GetView<NotificationsController> {
                       width: 100, height: 100),
                 );
               }
+              if (snapshot.connectionState == ConnectionState.none) {
+                return const Text("لا توجد بيانات للعرض.");
+              }
               return Column(
                 children: [
                   SizedBox(

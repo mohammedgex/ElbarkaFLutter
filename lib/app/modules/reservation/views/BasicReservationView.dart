@@ -171,10 +171,6 @@ class BasicReservationView extends GetView<ReservationController> {
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
                             controller.reservation();
-                            controller.pageController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.slowMiddle,
-                            );
                           }
                         },
                         child: controller.isLoading.value

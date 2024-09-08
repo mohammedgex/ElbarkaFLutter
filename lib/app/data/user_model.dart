@@ -2,11 +2,10 @@ class UserModel {
   final int id;
   final String name;
   final String phone;
-  final String birthdate;
-  final String passportNumber;
-  final String country;
   final String email;
   final int isActive;
+  final int isBlocked;
+
   final String image;
   final String? emailVerifiedAt;
   final String? twoFactorConfirmedAt;
@@ -20,10 +19,8 @@ class UserModel {
     required this.id,
     required this.name,
     required this.phone,
-    required this.birthdate,
-    required this.passportNumber,
-    required this.country,
     required this.email,
+    required this.isBlocked,
     required this.isActive,
     required this.image,
     this.emailVerifiedAt,
@@ -40,11 +37,9 @@ class UserModel {
       id: json['id'],
       name: json['name'],
       phone: json['phone'],
-      birthdate: json['birthdate'],
-      passportNumber: json['passport_number'],
-      country: json['country'],
       email: json['email'],
       isActive: json['is_active'],
+      isBlocked: json['is_blocked'],
       image: json['image'],
       emailVerifiedAt: json['email_verified_at'],
       twoFactorConfirmedAt: json['two_factor_confirmed_at'],
