@@ -329,7 +329,6 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                                         ...List.generate(
                                             controller.routeCategory.length,
                                             (index) {
-                                              
                                           return GestureDetector(
                                               onTap: () => controller
                                                   .selectedRouteTyp
@@ -421,12 +420,12 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-
                                             Get.toNamed(
                                                 controller.selectedRoute!
                                                             .type ==
                                                         "قطعة"
-                                                    ? Routes.MY_PAYMENTS
+                                                    ? Routes
+                                                        .SHORT_ROUTE_RESERVATION
                                                     : Routes.NOTES,
                                                 arguments: {
                                                   "selectedRouteId": controller

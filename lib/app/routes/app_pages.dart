@@ -39,6 +39,8 @@ import '../modules/reservation/bindings/reservation_binding.dart';
 import '../modules/reservation/views/reservation_view.dart';
 import '../modules/saved_transportations/bindings/saved_transportations_binding.dart';
 import '../modules/saved_transportations/views/saved_transportations_view.dart';
+import '../modules/shortRouteReservation/bindings/short_route_reservation_binding.dart';
+import '../modules/shortRouteReservation/views/short_route_reservation_view.dart';
 import '../modules/transport_details/bindings/transport_details_binding.dart';
 import '../modules/transport_details/views/notes.dart';
 import '../modules/transport_details/views/transport_details_view.dart';
@@ -172,6 +174,11 @@ class AppPages {
       name: _Paths.CHECKOUT,
       page: () => const CheckoutView(),
       binding: CheckoutBinding(),
+    ),
+    GetPage(
+      name: _Paths.SHORT_ROUTE_RESERVATION,
+      page: () => const ShortRouteReservationView(),
+      binding: ShortRouteReservationBinding(),
     ),
   ];
 }

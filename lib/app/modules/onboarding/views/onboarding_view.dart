@@ -7,7 +7,7 @@ import '../controllers/onboarding_controller.dart';
 final OnboardingController control = Get.put(OnboardingController());
 
 class OnboardingView extends GetView<OnboardingController> {
-  const OnboardingView({Key? key}) : super(key: key);
+  const OnboardingView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +27,7 @@ Widget body() {
     child: Center(
       child: PageView.builder(
           controller: control.pageController,
+          physics: const BouncingScrollPhysics(),
           onPageChanged: (value) {
             control.currentIndex.value = value;
           },
@@ -38,7 +39,23 @@ Widget body() {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   //Images
-                  Image.asset(control.items[index].image),
+                  Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          boxShadow: const [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 2,
+                                color: appColors.borderColor)
+                          ],
+                          color: appColors.secondColor,
+                          borderRadius: BorderRadius.circular(500)),
+                      child: Image.asset(
+                        control.items[index].image,
+                        width: 350,
+                        height: 350,
+                      )),
 
                   const SizedBox(height: 30),
                   //Titles
@@ -61,7 +78,7 @@ Widget body() {
                       style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 16,
-                          fontFamily: Appfonts.mainFont),
+                          fontFamily: Appfonts.lightFont),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -84,7 +101,7 @@ Widget buildDots() {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   color: control.currentIndex.value == index
-                      ? Colors.blue
+                      ? appColors.secondColor
                       : const Color.fromARGB(255, 70, 69, 69),
                 ),
                 height: 7,
