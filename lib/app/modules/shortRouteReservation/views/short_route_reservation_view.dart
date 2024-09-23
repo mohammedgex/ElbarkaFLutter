@@ -1,4 +1,5 @@
 import 'package:baraka_trans/app/data/tranportaionModel.dart';
+import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:baraka_trans/utilits/button.dart';
@@ -11,12 +12,13 @@ class ShortRouteReservationView
   const ShortRouteReservationView({super.key});
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
+    final controll = Get.find<ShortRouteReservationController>();
     var screenHeight = MediaQuery.of(context).size.height;
+    var args = Get.arguments;
+    controll.busId = args["busId"] ?? 1;
+    controll.availableRoutes = args["routes"];
     final _formKey = GlobalKey<FormState>();
-    final controll = Get.put(ShortRouteReservationController());
-
-    // print(controller.reservationId);
+    print(controll.busId);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,8 +51,20 @@ class ShortRouteReservationView
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(route.name!),
-                            Text(route.type!),
+                            Expanded(
+                                flex: 2,
+                                child: Text(
+                                  route.name!,
+                                  style: const TextStyle(
+                                      fontFamily: Appfonts.lightFont,
+                                      fontSize: 12),
+                                )),
+                            Expanded(
+                                child: Text(
+                                    "${route.pivot!.price!.toString()} ريال",
+                                    style: const TextStyle(
+                                        fontFamily: Appfonts.lightFont,
+                                        fontSize: 12))),
                           ],
                         ),
                       );
@@ -64,6 +78,11 @@ class ShortRouteReservationView
                     onTap: () {
                       if (controll.selectedValue.value.id != null) {
                         controll.addTransaction(controll.selectedValue.value);
+                        controll.selectedRoutes
+                            .add(controll.selectedValue.value);
+                        controll.addPrice(
+                            controll.selectedValue.value.pivot!.price!);
+
                         Get.back();
                       }
                     },
@@ -92,6 +111,7 @@ class ShortRouteReservationView
             children: [
               Container(
                 width: double.infinity,
+                padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
                   boxShadow: const [
@@ -108,29 +128,59 @@ class ShortRouteReservationView
                     end: Alignment.bottomRight,
                   ),
                 ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "السعر الاجمالي :",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: Appfonts.lightFont,
-                          decorationColor: appColors.secondColor,
-                          fontSize: 15, // Slightly increased font size
-                          color: appColors.textColor),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "عدد المسارات :",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: Appfonts.lightFont,
+                              decorationColor: appColors.secondColor,
+                              fontSize: 15, // Slightly increased font size
+                              color: appColors.textColor),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Obx(() => Text(
+                              "${controll.selectedRoutes.length}",
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: Appfonts.mainFont,
+                                  color: Colors.white),
+                            ))
+                      ],
                     ),
-                    SizedBox(
-                      width: 5,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "السعر الاجمالي :",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: Appfonts.lightFont,
+                              decorationColor: appColors.secondColor,
+                              fontSize: 15, // Slightly increased font size
+                              color: appColors.textColor),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Obx(() => Text(
+                              "${controll.price.value} ريال",
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: Appfonts.mainFont,
+                                  color: Colors.white),
+                            ))
+                      ],
                     ),
-                    Text(
-                      "5000 ريال",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: Appfonts.mainFont,
-                          color: Colors.white),
-                    )
                   ],
                 ),
               ),
@@ -141,25 +191,39 @@ class ShortRouteReservationView
                   height: screenHeight * 0.8,
                   child: Obx(() => ListView.separated(
                         physics: const ClampingScrollPhysics(),
-                        itemCount: controll.transList.length,
+                        itemCount: controll.selectedRoutes.length,
                         itemBuilder: (context, index) {
-                          return addedRoutes(screenHeight: screenHeight);
+                          return AddedRoutes(
+                            screenHeight: screenHeight,
+                            title: controll.selectedRoutes[index].name!,
+                            price: controll.selectedRoutes[index].pivot!.price!
+                                .toString(),
+                          );
                         },
                         separatorBuilder: (BuildContext context, int index) {
                           return SizedBox(height: screenHeight * 0.01);
                         },
                       )),
                 ),
-                const Positioned(
+                Positioned(
                   bottom: 0,
                   left: 5,
                   right: 5,
-                  child: Button(
-                    raduis: 12,
-                    title: "التالي",
+                  child: GestureDetector(
+                    onTap: () {
+                      if (controll.selectedRoutes.isNotEmpty &&
+                          controll.price.value != 0) {
+                        controll.newSelectedRoutes = controll.selectedRoutes;
+                        Get.toNamed(Routes.SHORT_RESERVATION);
+                      }
+                    },
+                    child: const Button(
+                      raduis: 12,
+                      title: "التالي",
+                    ),
                   ),
                 ),
-              ]),
+              ])
             ],
           ),
         ),
@@ -168,13 +232,16 @@ class ShortRouteReservationView
   }
 }
 
-class addedRoutes extends StatelessWidget {
-  const addedRoutes({
-    super.key,
-    required this.screenHeight,
-  });
+class AddedRoutes extends StatelessWidget {
+  const AddedRoutes(
+      {super.key,
+      required this.screenHeight,
+      required this.price,
+      required this.title});
 
   final double screenHeight;
+  final String title;
+  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +251,7 @@ class addedRoutes extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: appColors.borderColor,
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [
               Color.fromARGB(255, 167, 102, 4),
               Color.fromARGB(155, 41, 33, 33)
@@ -193,11 +260,11 @@ class addedRoutes extends StatelessWidget {
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(12)),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("قاهرة - جدة"),
-          Text("5000 ريال"),
+          Text(title),
+          Text("$price ريال"),
         ],
       ),
     );

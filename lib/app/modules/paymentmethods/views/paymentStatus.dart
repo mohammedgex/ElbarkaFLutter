@@ -109,7 +109,7 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
                                     fontSize: 13,
                                     color: appColors.secondColor),
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                       ],
                     ),
                     Row(

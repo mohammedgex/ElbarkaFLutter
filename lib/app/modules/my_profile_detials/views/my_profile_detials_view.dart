@@ -59,7 +59,7 @@ class MyProfileDetialsView extends GetView<MyProfileDetialsController> {
                         fit: BoxFit.cover,
                         image: controller.imageFile!.value.path.isEmpty
                             ? NetworkImage(
-                                "http://192.168.1.80:8000/uploads/${mainController.userData.value.image}")
+                                "https://6874-188-40-217-164.ngrok-free.app/storage/${mainController.userData.value.image}")
                             : FileImage(controller.imageFile!.value),
                       ),
                       color: appColors.mainColor,

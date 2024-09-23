@@ -1,3 +1,4 @@
+import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/utilits/auth.dart';
 import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,10 @@ class ReservationController extends GetxController {
   void reservation() async {
     isLoading.value = true;
     try {
+      print(busId);
+      print(routeId);
+      print(basicBagsCount);
+      print(basicBagsCount);
       final result = await _authRepository.reservation(
         busId!,
         routeId!,
@@ -87,8 +92,8 @@ class ReservationController extends GetxController {
         isLoading.value = false;
       }
     } catch (e) {
-      print(e);
       isLoading.value = false;
+      print(e);
     }
   }
 
@@ -150,6 +155,13 @@ class ReservationController extends GetxController {
           duration: const Duration(milliseconds: 300),
           curve: Curves.slowMiddle,
         );
+        if (isMecca == false) {
+          Get.offAllNamed(Routes.PAYMENTMETHODS, arguments: {
+            "reservationId": reservationId,
+            "amountEGP": amountSR!,
+            "amountSR": amountSR
+          });
+        }
       } else {
         print("failed");
         isLoading.value = false;

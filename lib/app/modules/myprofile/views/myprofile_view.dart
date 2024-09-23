@@ -36,7 +36,7 @@ class MyprofileView extends GetView<MyprofileController> {
                         image: DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                                "http://192.168.1.80:8000/uploads/${mainController.userData.value.image}"))),
+                                "https://6874-188-40-217-164.ngrok-free.app/storage/${mainController.userData.value.image}"))),
                   ),
                   const SizedBox(
                     height: 12,
@@ -102,7 +102,8 @@ class MyprofileView extends GetView<MyprofileController> {
                                 fontSize: 14, fontFamily: Appfonts.meduimFont),
                             middleText:
                                 "سيتم توجيهك الي صفحة تسجيل الدخول مرة اخري",
-                            middleTextStyle: const TextStyle(fontSize: 10),
+                            middleTextStyle: const TextStyle(
+                                fontSize: 10, fontFamily: Appfonts.lightFont),
                             textConfirm: "تأكيد",
                             textCancel: "الغاء",
                             radius: 12,

@@ -1,7 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:convert';
+
 import 'package:baraka_trans/app/data/tranportaionModel.dart';
+import 'package:baraka_trans/utilits/api_service.dart';
+import 'package:baraka_trans/utilits/auth.dart';
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class TransportDetailsController extends GetxController {
@@ -9,6 +14,8 @@ class TransportDetailsController extends GetxController {
   RxInt Is_Selected = 0.obs;
   RxInt selectedRouteTyp = 0.obs;
   final CarouselController carousel_controller = CarouselController();
+  final AuthRepository _authRepository = AuthRepository();
+  final ApiService _apiService = ApiService();
 
   transRoutes? selectedRoute;
 
@@ -35,5 +42,33 @@ class TransportDetailsController extends GetxController {
 
   void InitalRoute() {
     selectedRoute = routes[0];
+  }
+
+  void addToFavorite(int busId, BuildContext context) async {
+    try {
+      final response = await _authRepository.addBusToFavorite(busId, context);
+
+      print('Bus added to favorite: $response');
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<tranportaionModel?> fetchBusData(int busId) async {
+    try {
+      final response = await _apiService.get('buses/$busId');
+
+      if (response.statusCode == 200) {
+        // Parse the bus data
+        final busData = tranportaionModel.fromJson(jsonDecode(response.body));
+        print('Bus data: ${busData.description}');
+        return busData; // Return the Bus object
+      } else {
+        throw Exception('Failed to get data: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception(
+          'Failed to get data: $e'); // Return null in case of an exception
+    }
   }
 }

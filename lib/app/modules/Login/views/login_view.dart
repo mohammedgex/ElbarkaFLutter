@@ -38,7 +38,10 @@ class LoginView extends GetView<LoginController> {
                 const SizedBox(height: 10),
                 const Text(
                   "قم بتسجيل الدخول لاستخدام التطبيق.",
-                  style: TextStyle(fontSize: 12, color: appColors.textColor),
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: appColors.textColor,
+                      fontFamily: Appfonts.lightFont),
                 ),
                 const SizedBox(height: 30),
                 textField(

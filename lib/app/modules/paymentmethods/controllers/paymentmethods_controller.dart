@@ -1,8 +1,10 @@
+import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/utilits/auth.dart';
 import 'package:baraka_trans/utilits/paymob_manager.dart';
 import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PaymentmethodsController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -66,13 +68,35 @@ class PaymentmethodsController extends GetxController
 
   void payWithCard() async {
     try {
-      final result = await _authRepository.payWithCard(
-          reservationId! ?? 1, amountEGP! * 13.5);
+      final result =
+          await _authRepository.payWithCard(reservationId!, amountEGP! * 13.5);
       if (result["success"]) {
         print("success");
       } else {}
     } catch (e) {
       print("erro $e");
+    }
+  }
+
+  void paymentInCompanyRequest(BuildContext context) async {
+    try {
+      final response = await _authRepository.payInCompany(context);
+
+      print('Bus added to favorite: $response');
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  void openGoogleMaps(double latitude, double longitude) async {
+    final String url =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+      Get.offAllNamed(Routes.MAIN);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 }

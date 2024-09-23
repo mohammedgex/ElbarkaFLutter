@@ -17,17 +17,17 @@ class MyreservationsView extends GetView<MyreservationsController> {
         title: const Text('حجوزاتي'),
         backgroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        child: FutureBuilder(
-          future: controll.fetchUserReservations(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: Lottie.asset('assets/loading.json',
-                    width: 100, height: 100),
-              );
-            }
-            return SizedBox(
+      body: FutureBuilder(
+        future: controll.fetchUserReservations(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child:
+                  Lottie.asset('assets/loading.json', width: 250, height: 250),
+            );
+          }
+          return SingleChildScrollView(
+            child: SizedBox(
               width: double.infinity,
               height: MediaQuery.of(context).size.height,
               child: ListView.builder(
@@ -68,9 +68,9 @@ class MyreservationsView extends GetView<MyreservationsController> {
                       ),
                     );
                   }),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

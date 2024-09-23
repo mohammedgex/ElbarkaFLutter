@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:baraka_trans/utilits/api_service.dart';
 
@@ -43,7 +45,7 @@ class AuthRepository {
     int bus_id,
     int bus_route_id,
     int num_pilgrims,
-    int num_buses,
+    int num_bags,
     String umrah_company,
     String mecca_hotel_name,
     String medina_hotel_name,
@@ -52,12 +54,47 @@ class AuthRepository {
       'bus_id': bus_id,
       'bus_route_id': bus_route_id,
       'num_pilgrims': num_pilgrims,
-      'num_buses': num_buses,
+      'num_bags': num_bags,
       'umrah_company': umrah_company,
       'mecca_hotel_name': mecca_hotel_name,
       'medina_hotel_name': medina_hotel_name,
     };
     final response = await _apiService.post('user/reservations', data);
+
+    if (response.statusCode == 200) {
+      // Decode and handle the response as needed
+      return jsonDecode(response.body);
+    } else {
+      return jsonDecode(response.body);
+    }
+  }
+
+  // reservation
+  Future<Map<String, dynamic>> smallReservation(
+      int bus_id,
+      int bus_route_id,
+      int number_of_riders,
+      int number_of_bags,
+      String trip_number,
+      String travel_airlines,
+      String time,
+      String date,
+      String origin,
+      String destination,
+      BuildContext context) async {
+    final data = {
+      'bus_id': bus_id,
+      'route_id': bus_route_id,
+      'trip_number': trip_number,
+      'number_of_bags': number_of_bags,
+      'origin': origin,
+      'destination': destination,
+      'number_of_riders': number_of_riders,
+      'date': date,
+      'time': time,
+      'travel_airlines': travel_airlines,
+    };
+    final response = await _apiService.post('small-routes-reservation', data);
 
     if (response.statusCode == 200) {
       // Decode and handle the response as needed
@@ -230,6 +267,69 @@ class AuthRepository {
       return jsonDecode(response.body);
     } else {
       return jsonDecode(response.body);
+    }
+  }
+
+  // Method to add bus to favorite
+  Future<Map<String, dynamic>> addBusToFavorite(
+      int busId, BuildContext context) async {
+    final response = await _apiService.post('bus/$busId/favorite', {});
+
+    if (response.statusCode == 200) {
+      IconSnackBar.show(context,
+          snackBarType: SnackBarType.success,
+          labelTextStyle: const TextStyle(fontSize: 12),
+          label: 'تم الاضافة الي المفضلة بنجاح');
+      return jsonDecode(response.body);
+    } else {
+      IconSnackBar.show(context,
+          snackBarType: SnackBarType.fail,
+          label: 'تمت اضافة هذا العنصر مسبقا.',
+          labelTextStyle: const TextStyle(fontSize: 12));
+      throw Exception('Failed to add bus to favorites: ${response.body}');
+    }
+  }
+
+  // Method to add bus to favorite
+  Future<Map<String, dynamic>> removeBusFromFavorite(
+      int busId, BuildContext context) async {
+    final response = await _apiService.post('delete/$busId/favorite', {});
+
+    if (response.statusCode == 200) {
+      IconSnackBar.show(context,
+          snackBarType: SnackBarType.success,
+          labelTextStyle: const TextStyle(fontSize: 12),
+          label: 'تم الازالة من المفضلة بنجاح');
+      return jsonDecode(response.body);
+    } else {
+      IconSnackBar.show(context,
+          snackBarType: SnackBarType.fail,
+          label: 'تمت اضافة هذا العنصر مسبقا.',
+          labelTextStyle: const TextStyle(fontSize: 12));
+      throw Exception('Failed to add bus to favorites: ${response.body}');
+    }
+  }
+
+  Future<Map<String, dynamic>> payInCompany(BuildContext context) async {
+    final response = await _apiService.post('company-hq-payment-requests', {});
+
+    try {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        IconSnackBar.show(context,
+            snackBarType: SnackBarType.success,
+            labelTextStyle: const TextStyle(fontSize: 12),
+            label: 'تم ارسال الطلب');
+        return jsonDecode(response.body);
+      } else {
+        IconSnackBar.show(context,
+            snackBarType: SnackBarType.fail,
+            label: 'حدث خطأ.',
+            labelTextStyle: const TextStyle(fontSize: 12));
+        throw Exception('Failed to add bus to favorites: ${response.body}');
+      }
+    } catch (e) {
+      print(e);
+      throw Exception('Failed to add bus to favorites: ${response.body}');
     }
   }
 }

@@ -30,22 +30,22 @@ class MyPaymentsView extends GetView<MyPaymentsController> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: FutureBuilder(
-              future: controller.fetchUserPayments(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: Lottie.asset('assets/loading.json',
-                        width: 100, height: 100),
-                  );
-                }
-                if (snapshot.connectionState == ConnectionState.none) {
-                  return const Text("لا توجد بيانات للعرض.");
-                }
-                return Column(
+        body: FutureBuilder(
+          future: controller.fetchUserPayments(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Lottie.asset('assets/loading.json',
+                    width: 250, height: 250),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.none) {
+              return const Text("لا توجد بيانات للعرض.");
+            }
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
                   children: [
                     SizedBox(
                       width: double.infinity,
@@ -67,10 +67,10 @@ class MyPaymentsView extends GetView<MyPaymentsController> {
                       ),
                     )
                   ],
-                );
-              },
-            ),
-          ),
+                ),
+              ),
+            );
+          },
         ));
   }
 }

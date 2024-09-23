@@ -29,7 +29,10 @@ class VerifyAccount extends GetView<SignupController> {
               ),
               const Text(
                 "قم بكتابة رمز التحق المرسل لك في الرسالة النصية",
-                style: TextStyle(fontSize: 12, color: appColors.textColor),
+                style: TextStyle(
+                    fontSize: 14,
+                    color: appColors.textColor,
+                    fontFamily: Appfonts.lightFont),
               ),
               const SizedBox(
                 height: 20,
@@ -39,6 +42,7 @@ class VerifyAccount extends GetView<SignupController> {
                 fieldWidth: 40,
                 borderWidth: 1.5,
                 autoFocus: true,
+                clearText: true,
                 fieldHeight: 50,
                 borderColor: appColors.borderColor,
                 focusedBorderColor: appColors.mainColor,
@@ -57,10 +61,13 @@ class VerifyAccount extends GetView<SignupController> {
               const SizedBox(
                 height: 20,
               ),
-              Obx(() => InkWell(
-                    onTap: () => controller.verifyOtp(dataFromSignup["phone"]),
+              Obx(() => GestureDetector(
+                    onTap: () =>
+                        controller.verifyOtp(context, dataFromSignup["phone"]),
                     child: controller.isLoading.value
-                        ? const CircularProgressIndicator()
+                        ? const CircularProgressIndicator(
+                            color: appColors.secondColor,
+                          )
                         : const Button(
                             title: "تأكيد",
                             raduis: 16,

@@ -34,11 +34,11 @@ class DeptureReservationView extends GetView<ReservationController> {
                 const Text(
                   "يرجي كتابة بيانات المغادرة بطريقة صحيحة.",
                   style: TextStyle(
-                      fontFamily: Appfonts.mainFont,
-                      decoration: TextDecoration.underline,
-                      decorationColor: appColors.secondColor,
-                      fontSize: 16, // Slightly increased font size
-                      color: appColors.textColor),
+                    fontFamily: Appfonts.mainFont,
+                    decoration: TextDecoration.underline,
+                    decorationColor: appColors.secondColor,
+                    fontSize: 16, // Slightly increased font size
+                  ),
                 ),
                 SizedBox(height: screenHeight * 0.02), // Added spacing
                 Container(

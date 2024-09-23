@@ -38,7 +38,7 @@ class ArrivalReservationView extends GetView<ReservationController> {
                       decoration: TextDecoration.underline,
                       decorationColor: appColors.secondColor,
                       fontSize: 16, // Slightly increased font size
-                      color: appColors.textColor),
+                     ),
                 ),
                 SizedBox(height: screenHeight * 0.02), // Added spacing
                 Container(

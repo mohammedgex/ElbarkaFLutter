@@ -1,4 +1,3 @@
-import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:baraka_trans/utilits/button.dart';
@@ -66,8 +65,10 @@ class Self_paymentView extends GetView<PaymentmethodsController> {
             left: 20,
             right: 20,
             child: InkWell(
-              onTap: () => Get.toNamed(Routes.PAYMENT_STATUS,
-                  arguments: {"paymentStatus": false}),
+              onTap: () {
+                controller.paymentInCompanyRequest(context);
+                controller.openGoogleMaps(30.0634136, 31.3318302);
+              },
               child: const Button(
                 raduis: 12,
                 Btncolor: appColors.secondColor,

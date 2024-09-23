@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl = 'http://192.168.1.80:8000/api/';
+  final String baseUrl = 'https://6874-188-40-217-164.ngrok-free.app/api/';
   final storage = GetStorage();
 
   // Method to get the headers for all requests

@@ -28,6 +28,7 @@ abstract class Routes {
   static const PAYMENT_STATUS = _Paths.PAYMENT_STATUS;
   static const CHECKOUT = _Paths.CHECKOUT;
   static const SHORT_ROUTE_RESERVATION = _Paths.SHORT_ROUTE_RESERVATION;
+  static const SHORT_RESERVATION = _Paths.SHORT_RESERVATION;
 }
 
 abstract class _Paths {
@@ -57,4 +58,5 @@ abstract class _Paths {
   static const PAYMENT_STATUS = '/payment-status';
   static const CHECKOUT = '/checkout';
   static const SHORT_ROUTE_RESERVATION = '/short-route-reservation';
+  static const SHORT_RESERVATION = '/short-reservation';
 }

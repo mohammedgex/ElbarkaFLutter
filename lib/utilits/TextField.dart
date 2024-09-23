@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +30,14 @@ class textField extends StatelessWidget {
     return TextFormField(
       keyboardType: type,
       validator: validation,
-      onChanged: value ?? null,
+      selectionWidthStyle: BoxWidthStyle.max,
+      selectionHeightStyle: BoxHeightStyle.includeLineSpacingBottom,
+      onChanged: value,
       controller: textFieldController,
+      cursorColor: appColors.secondColor,
       textAlign: isTextCentered! ? TextAlign.center : TextAlign.right,
+      style: const TextStyle(
+          color: appColors.textColor, fontFamily: Appfonts.lightFont),
       decoration: InputDecoration(
           prefixIcon: icon,
           suffixIcon: suffixIcon,

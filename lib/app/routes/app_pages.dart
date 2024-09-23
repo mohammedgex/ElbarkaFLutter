@@ -1,3 +1,4 @@
+import 'package:baraka_trans/app/modules/shortRouteReservation/views/short_reservation.dart';
 import 'package:get/get.dart';
 
 import '../modules/ChatSupport/bindings/chat_support_binding.dart';
@@ -72,8 +73,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MYRESERVATIONS,
-      page: () => MyreservationsView(),
+      page: () => const MyreservationsView(),
       binding: MyreservationsBinding(),
+    ),
+    GetPage(
+      name: _Paths.SHORT_RESERVATION,
+      page: () => const ShortReservationView(),
+      binding: ShortRouteReservationBinding(),
     ),
     GetPage(
       name: _Paths.MYPROFILE,

@@ -1,4 +1,3 @@
-import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:baraka_trans/utilits/TextField.dart';
@@ -11,7 +10,7 @@ import 'package:iconly/iconly.dart';
 import '../controllers/reservation_controller.dart';
 
 class MaddinaVisitsReservationView extends GetView<ReservationController> {
-  const MaddinaVisitsReservationView({Key? key}) : super(key: key);
+  const MaddinaVisitsReservationView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +35,11 @@ class MaddinaVisitsReservationView extends GetView<ReservationController> {
                   "يرجي كتابة بيانات مزارات المدينة بطريقة صحيحة.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontFamily: Appfonts.mainFont,
-                      decoration: TextDecoration.underline,
-                      decorationColor: appColors.secondColor,
-                      fontSize: 16, // Slightly increased font size
-                      color: appColors.textColor),
+                    fontFamily: Appfonts.mainFont,
+                    decoration: TextDecoration.underline,
+                    decorationColor: appColors.secondColor,
+                    fontSize: 16, // Slightly increased font size
+                  ),
                 ),
                 SizedBox(height: screenHeight * 0.02), // Added spacing
                 Container(
@@ -175,11 +174,11 @@ class MaddinaVisitsReservationView extends GetView<ReservationController> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       controller.visits(false);
-                      Get.offAllNamed(Routes.PAYMENTMETHODS, arguments: {
-                        "reservationId": controller.reservationId,
-                        "amountEGP": controller.amountSR!,
-                        "amountSR": controller.amountSR
-                      });
+                      // Get.offAllNamed(Routes.PAYMENTMETHODS, arguments: {
+                      //   "reservationId": controller.reservationId,
+                      //   "amountEGP": controller.amountSR!,
+                      //   "amountSR": controller.amountSR
+                      // });
                     }
                   },
                   child: const Button(

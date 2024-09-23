@@ -34,11 +34,11 @@ class MeccaVisitsReservationView extends GetView<ReservationController> {
                 const Text(
                   "يرجي كتابة بيانات مزارات مكة بطريقة صحيحة.",
                   style: TextStyle(
-                      fontFamily: Appfonts.mainFont,
-                      decoration: TextDecoration.underline,
-                      decorationColor: appColors.secondColor,
-                      fontSize: 16, // Slightly increased font size
-                      color: appColors.textColor),
+                    fontFamily: Appfonts.mainFont,
+                    // decoration: TextDecoration.underline,
+                    // decorationColor: appColors.secondColor,
+                    fontSize: 16, // Slightly increased font size
+                  ),
                 ),
                 SizedBox(height: screenHeight * 0.02), // Added spacing
                 Container(
@@ -173,7 +173,6 @@ class MeccaVisitsReservationView extends GetView<ReservationController> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       controller.visits(true);
-                      
                     }
                   },
                   child: const Button(

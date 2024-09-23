@@ -27,13 +27,13 @@ class feature extends StatelessWidget {
           SvgPicture.asset(
             svg_url!,
             color: appColors.mainColor,
-            width: 27,
-            height: 27,
+            width: 25,
+            height: 25,
           ),
           Text(
             text!,
             style: const TextStyle(
-                fontFamily: Appfonts.mainFont,
+                fontFamily: Appfonts.lightFont,
                 fontSize: 10,
                 color: appColors.textColor),
           )

@@ -42,11 +42,10 @@ class BasicReservationView extends GetView<ReservationController> {
                       "يجب عليك ادخال جميع البيانات التالية بطريقة صحيحة",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: Appfonts.mainFont,
+                        fontFamily: Appfonts.boldFont,
                         decorationColor: appColors.secondColor,
                         decoration: TextDecoration.underline,
                         fontSize: screenWidth * 0.04, // Responsive font size
-                        color: appColors.textColor,
                       ),
                     ),
                   ),

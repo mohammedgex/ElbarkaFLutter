@@ -188,8 +188,6 @@ class SignupView extends GetView<SignupController> {
                           child: controller.isLoading.value
                               ? const CircularProgressIndicator(
                                   color: appColors.secondColor,
-                                  backgroundColor: appColors.secondColor,
-                                  strokeWidth: 3,
                                 )
                               : const Button(
                                   title: "انشاء حساب",

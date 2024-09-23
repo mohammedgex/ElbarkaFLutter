@@ -5,6 +5,7 @@ import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:baraka_trans/utilits/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -101,14 +102,17 @@ class SignupController extends GetxController {
   }
 
   // verfiy otp
-  void verifyOtp(String phone) async {
+  void verifyOtp(BuildContext context, String phone) async {
     isLoading.value = true;
 
     try {
       final result = await _authRepository.verifyOTP(phone, otpCode);
       if (result["token"] != null) {
         isLoading.value = false;
-        Get.snackbar("تم بنجاح", "تم انشاء الحساب بنجاح");
+        IconSnackBar.show(context,
+            snackBarType: SnackBarType.success,
+            labelTextStyle: const TextStyle(fontSize: 12),
+            label: "تم تأكيد الحساب بنجاح");
         Get.offAllNamed(Routes.LOGIN);
       } else if (result["error"] != null) {
         isLoading.value = false;

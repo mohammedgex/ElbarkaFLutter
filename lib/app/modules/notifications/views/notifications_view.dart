@@ -22,22 +22,22 @@ class NotificationsView extends GetView<NotificationsController> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FutureBuilder(
-            future: controller.fetchUserNotification(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: Lottie.asset('assets/loading.json',
-                      width: 100, height: 100),
-                );
-              }
-              if (snapshot.connectionState == ConnectionState.none) {
-                return const Text("لا توجد بيانات للعرض.");
-              }
-              return Column(
+      body: FutureBuilder(
+        future: controller.fetchUserNotification(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child:
+                  Lottie.asset('assets/loading.json', width: 250, height: 250),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.none) {
+            return const Text("لا توجد بيانات للعرض.");
+          }
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
                   SizedBox(
                     width: double.infinity,
@@ -61,10 +61,10 @@ class NotificationsView extends GetView<NotificationsController> {
                     ),
                   )
                 ],
-              );
-            },
-          ),
-        ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
