@@ -60,8 +60,8 @@ class MaddinaVisitsReservationView extends GetView<ReservationController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       textField(
-                        hint_text: "الخطوط الجوية",
-                        value: (value) => controller.MeccaFrom = value,
+                        hint_text: "من",
+                        value: (value) => controller.maddinaFrom = value,
                         validation: (value) {
                           if (value!.isNotEmpty) {
                             return null;
@@ -77,8 +77,8 @@ class MaddinaVisitsReservationView extends GetView<ReservationController> {
                       const Center(child: Icon(IconlyLight.arrow_up_2)),
                       SizedBox(height: screenHeight * 0.02),
                       textField(
-                        hint_text: "رقم الرحلة",
-                        value: (value) => controller.MeccaFrom = value,
+                        hint_text: "الي",
+                        value: (value) => controller.maddinaTo = value,
                         validation: (value) {
                           if (value!.isNotEmpty) {
                             return null;
@@ -174,11 +174,6 @@ class MaddinaVisitsReservationView extends GetView<ReservationController> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       controller.visits(false);
-                      // Get.offAllNamed(Routes.PAYMENTMETHODS, arguments: {
-                      //   "reservationId": controller.reservationId,
-                      //   "amountEGP": controller.amountSR!,
-                      //   "amountSR": controller.amountSR
-                      // });
                     }
                   },
                   child: const Button(

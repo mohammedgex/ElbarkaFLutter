@@ -9,6 +9,7 @@ class reservationModel {
   String? meccaHotelName;
   String? medinaHotelName;
   String? reservationStatus;
+  String? paymentStatus;
   String? createdAt;
   String? updatedAt;
   List<Payments>? payments;
@@ -38,7 +39,8 @@ class reservationModel {
       this.internalMovements,
       this.bus,
       this.busRoute,
-      this.bookingContact});
+      this.bookingContact,
+      this.paymentStatus});
 
   reservationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -51,83 +53,42 @@ class reservationModel {
     meccaHotelName = json['mecca_hotel_name'];
     medinaHotelName = json['medina_hotel_name'];
     reservationStatus = json['reservation_status'];
+    paymentStatus = json['payment_status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['payments'] != null) {
       payments = <Payments>[];
       json['payments'].forEach((v) {
-        payments!.add(new Payments.fromJson(v));
+        payments!.add(Payments.fromJson(v));
       });
     }
     if (json['arrival_departures'] != null) {
       arrivalDepartures = <ArrivalDepartures>[];
       json['arrival_departures'].forEach((v) {
-        arrivalDepartures!.add(new ArrivalDepartures.fromJson(v));
+        arrivalDepartures!.add(ArrivalDepartures.fromJson(v));
       });
     }
     if (json['visits'] != null) {
       visits = <Visits>[];
       json['visits'].forEach((v) {
-        visits!.add(new Visits.fromJson(v));
+        visits!.add(Visits.fromJson(v));
       });
     }
     if (json['internal_movements'] != null) {
       internalMovements = <InternalMovements>[];
       json['internal_movements'].forEach((v) {
-        internalMovements!.add(new InternalMovements.fromJson(v));
+        internalMovements!.add(InternalMovements.fromJson(v));
       });
     }
-    bus = json['bus'] != null ? new Bus.fromJson(json['bus']) : null;
-    busRoute = json['bus_route'] != null
-        ? new BusRoute.fromJson(json['bus_route'])
-        : null;
+    bus = json['bus'] != null ? Bus.fromJson(json['bus']) : null;
+    busRoute =
+        json['bus_route'] != null ? BusRoute.fromJson(json['bus_route']) : null;
     if (json['booking_contact'] != null) {
       bookingContact = <BookingContact>[];
       json['booking_contact'].forEach((v) {
-        bookingContact!.add(new BookingContact.fromJson(v));
+        bookingContact!.add(BookingContact.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['bus_id'] = this.busId;
-    data['bus_route_id'] = this.busRouteId;
-    data['num_pilgrims'] = this.numPilgrims;
-    data['num_buses'] = this.numBuses;
-    data['umrah_company'] = this.umrahCompany;
-    data['mecca_hotel_name'] = this.meccaHotelName;
-    data['medina_hotel_name'] = this.medinaHotelName;
-    data['reservation_status'] = this.reservationStatus;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.payments != null) {
-      data['payments'] = this.payments!.map((v) => v.toJson()).toList();
-    }
-    if (this.arrivalDepartures != null) {
-      data['arrival_departures'] =
-          this.arrivalDepartures!.map((v) => v.toJson()).toList();
-    }
-    if (this.visits != null) {
-      data['visits'] = this.visits!.map((v) => v.toJson()).toList();
-    }
-    if (this.internalMovements != null) {
-      data['internal_movements'] =
-          this.internalMovements!.map((v) => v.toJson()).toList();
-    }
-    if (this.bus != null) {
-      data['bus'] = this.bus!.toJson();
-    }
-    if (this.busRoute != null) {
-      data['bus_route'] = this.busRoute!.toJson();
-    }
-    if (this.bookingContact != null) {
-      data['booking_contact'] =
-          this.bookingContact!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -164,20 +125,6 @@ class Payments {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['reservation_id'] = this.reservationId;
-    data['user_id'] = this.userId;
-    data['amount'] = this.amount;
-    data['payment_status'] = this.paymentStatus;
-    data['remaining_amount'] = this.remainingAmount;
-    data['payment_type'] = this.paymentType;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
 }
 
 class ArrivalDepartures {
@@ -212,20 +159,6 @@ class ArrivalDepartures {
     type = json['type'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['reservation_id'] = this.reservationId;
-    data['date'] = this.date;
-    data['time'] = this.time;
-    data['flight_number'] = this.flightNumber;
-    data['airline'] = this.airline;
-    data['type'] = this.type;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
   }
 }
 
@@ -262,20 +195,6 @@ class Visits {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['reservation_id'] = this.reservationId;
-    data['visit_date'] = this.visitDate;
-    data['from_place'] = this.fromPlace;
-    data['to_place'] = this.toPlace;
-    data['movement_time'] = this.movementTime;
-    data['bus_arrival_time'] = this.busArrivalTime;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
 }
 
 class InternalMovements {
@@ -310,20 +229,6 @@ class InternalMovements {
     busArrivalTime = json['bus_arrival_time'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['reservation_id'] = this.reservationId;
-    data['movement_date'] = this.movementDate;
-    data['from_place'] = this.fromPlace;
-    data['to_place'] = this.toPlace;
-    data['movement_time'] = this.movementTime;
-    data['bus_arrival_time'] = this.busArrivalTime;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
   }
 }
 
@@ -366,22 +271,6 @@ class Bus {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['type'] = this.type;
-    data['images'] = this.images;
-    data['category_id'] = this.categoryId;
-    data['capacity'] = this.capacity;
-    data['luggage_capacity'] = this.luggageCapacity;
-    data['max_speed'] = this.maxSpeed;
-    data['is_available'] = this.isAvailable;
-    data['features'] = this.features;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
 }
 
 class BusRoute {
@@ -408,17 +297,6 @@ class BusRoute {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['bus_id'] = this.busId;
-    data['route_id'] = this.routeId;
-    data['price'] = this.price;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
-  }
 }
 
 class BookingContact {
@@ -444,16 +322,5 @@ class BookingContact {
     driverPhone = json['driver_phone'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['reservation_id'] = this.reservationId;
-    data['driver_phone'] = this.driverPhone;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    return data;
   }
 }

@@ -307,7 +307,7 @@ class MainView extends GetView<MainController> {
                         width: double.infinity,
                         child: ListView.separated(
                           physics:
-                              const ClampingScrollPhysics(), // Allows scrolling
+                              const BouncingScrollPhysics(), // Allows scrolling
                           shrinkWrap:
                               true, // Ensures ListView takes up only as much space as needed
                           itemCount: transportationData?.length ?? 0,

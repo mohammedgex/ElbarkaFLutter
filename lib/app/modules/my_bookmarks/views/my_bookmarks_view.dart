@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/my_bookmarks_controller.dart';
 
 class MyBookmarksView extends GetView<MyBookmarksController> {
-  const MyBookmarksView({Key? key}) : super(key: key);
+  const MyBookmarksView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

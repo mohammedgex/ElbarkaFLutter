@@ -251,16 +251,7 @@ class BusUnit extends StatelessWidget {
             InkWell(
               onTap: () => Get.toNamed(Routes.TRANSPORT_DETAILS, arguments: {
                 "Images": Images,
-                "title": title,
-                "description": description,
-                "seats": seatsCount,
-                "speed": speed,
-                "riders": rdiersCount,
-                "features": features,
-                "routes": routes,
                 "busId": busId,
-                "Description": description,
-                "companyName": CompanyName,
               }),
               child: const Center(
                   child: Button(

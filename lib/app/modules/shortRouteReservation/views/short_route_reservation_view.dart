@@ -15,7 +15,7 @@ class ShortRouteReservationView
     final controll = Get.find<ShortRouteReservationController>();
     var screenHeight = MediaQuery.of(context).size.height;
     var args = Get.arguments;
-    controll.busId = args["busId"] ?? 1;
+    controll.busId = args["busId"];
     controll.availableRoutes = args["routes"];
     final _formKey = GlobalKey<FormState>();
     print(controll.busId);
@@ -214,7 +214,8 @@ class ShortRouteReservationView
                       if (controll.selectedRoutes.isNotEmpty &&
                           controll.price.value != 0) {
                         controll.newSelectedRoutes = controll.selectedRoutes;
-                        Get.toNamed(Routes.SHORT_RESERVATION);
+                        Get.toNamed(Routes.SHORT_RESERVATION,
+                            arguments: {"busId": controll.busId});
                       }
                     },
                     child: const Button(

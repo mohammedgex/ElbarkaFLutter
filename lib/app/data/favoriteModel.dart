@@ -49,22 +49,22 @@ class Favoritemodel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = this.id;
-    data['type'] = this.type;
-    data['description'] = this.description;
-    data['compnay_name'] = this.companyName;
-    data['images'] = this.images;
-    data['category_id'] = this.categoryId;
-    data['capacity'] = this.capacity;
-    data['luggage_capacity'] = this.luggageCapacity;
-    data['max_speed'] = this.maxSpeed;
-    data['is_available'] = this.isAvailable;
-    data['features'] = this.features;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.pivot != null) {
-      data['pivot'] = this.pivot!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['type'] = type;
+    data['description'] = description;
+    data['compnay_name'] = companyName;
+    data['images'] = images;
+    data['category_id'] = categoryId;
+    data['capacity'] = capacity;
+    data['luggage_capacity'] = luggageCapacity;
+    data['max_speed'] = maxSpeed;
+    data['is_available'] = isAvailable;
+    data['features'] = features;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (pivot != null) {
+      data['pivot'] = pivot!.toJson();
     }
     return data;
   }
@@ -82,9 +82,9 @@ class Pivot {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['bus_id'] = this.busId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['user_id'] = userId;
+    data['bus_id'] = busId;
     return data;
   }
 }

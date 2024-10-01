@@ -2,15 +2,15 @@ import 'package:baraka_trans/app/routes/app_pages.dart';
 import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:lottie/lottie.dart';
-
 import '../controllers/saved_transportations_controller.dart';
 
 class SavedTransportationsView extends GetView<SavedTransportationsController> {
-  const SavedTransportationsView({super.key});
+  SavedTransportationsView({super.key});
+  final savedTransportationsController =
+      Get.put(SavedTransportationsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,14 +18,6 @@ class SavedTransportationsView extends GetView<SavedTransportationsController> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: InkWell(
-          onTap: () => Get.back(),
-          child: const Icon(
-            color: appColors.secondColor,
-            Icons.arrow_back_ios,
-            size: 25,
-          ),
-        ),
         title: const Text(
           'المحفوظات',
           style: TextStyle(fontFamily: Appfonts.boldFont),
@@ -33,7 +25,7 @@ class SavedTransportationsView extends GetView<SavedTransportationsController> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: controller.fetchUserFavoritesList(),
+        future: savedTransportationsController.fetchUserFavoritesList(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(

@@ -99,4 +99,15 @@ class PaymentmethodsController extends GetxController
       throw 'Could not launch $url';
     }
   }
+
+  void paymentForTransfers(BuildContext context) async {
+    try {
+      final response =
+          await _authRepository.payForTransfers(context, amountEGP!);
+
+      print('Bus added to favorite: $response');
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
 }

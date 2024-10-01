@@ -19,6 +19,9 @@ class ShortReservationView extends GetView<ShortRouteReservationController> {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
     final _formKey = GlobalKey<FormState>();
+    final args = Get.arguments;
+    getController.busId = args["busId"];
+    print(getController.busId);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -103,7 +106,8 @@ class ShortReservationView extends GetView<ShortRouteReservationController> {
                           getController.newSelectedRoutes.length - 1) {
                         getController.routeIndex++;
 
-                        Get.offAndToNamed(Routes.SHORT_RESERVATION);
+                        Get.offAndToNamed(Routes.SHORT_RESERVATION,
+                            arguments: {"busId": getController.busId});
                         getController.newSelectedRoutes =
                             getController.newSelectedRoutes;
                         getController.AirLinesName = "";
@@ -116,6 +120,7 @@ class ShortReservationView extends GetView<ShortRouteReservationController> {
                         Get.toNamed(Routes.PAYMENTMETHODS, arguments: {
                           "reservationId": 1,
                           "amountEGP": 2500.0,
+                          "isTransfer": true,
                           "amountSR": double.parse(
                               getController.price.value.toString()),
                         });

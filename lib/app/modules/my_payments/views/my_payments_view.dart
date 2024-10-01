@@ -1,4 +1,3 @@
-import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:baraka_trans/utilits/payment_operation.dart';
 import 'package:flutter/material.dart';
@@ -13,25 +12,19 @@ class MyPaymentsView extends GetView<MyPaymentsController> {
 
   @override
   Widget build(BuildContext context) {
+    MyPaymentsController getController = Get.put(MyPaymentsController());
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          centerTitle: true,
           title: const Text(
             'عمليات الدفع',
             style: TextStyle(fontFamily: Appfonts.boldFont),
           ),
           backgroundColor: Colors.white,
-          leading: InkWell(
-            onTap: () => Get.back(),
-            child: const Icon(
-              color: appColors.secondColor,
-              Icons.arrow_back_ios,
-              size: 25,
-            ),
-          ),
         ),
         body: FutureBuilder(
-          future: controller.fetchUserPayments(),
+          future: getController.fetchUserPayments(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(

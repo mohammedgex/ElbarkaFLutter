@@ -17,13 +17,8 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
   @override
   Widget build(BuildContext context) {
     final transData = Get.arguments;
-    // final List<transRoutes> routes = transData["routes"] ?? [];
-    // final List<transRoutes> turnRoutes =
-    //     transData["routes"].where((route) => route.type == "دورة").toList() ??
-    //         [];
-    // controller.routes = routes;
-    final List<String> images = transData["Images"] ?? [];
-    final int busId = transData["busId"] ?? 1;
+    final List<String> images = transData["Images"];
+    final int busId = transData["busId"];
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -313,6 +308,10 @@ class TransportDetailsView extends GetView<TransportDetailsController> {
                             feature(
                               text: "${snapshot.data.capacity.toString()} راكب",
                               svg_url: "assets/persons.svg",
+                            ),
+                            feature(
+                              text: "${snapshot.data.routes.length} مسار",
+                              svg_url: "assets/seats.svg",
                             ),
                           ],
                         ),

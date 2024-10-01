@@ -42,22 +42,22 @@ class AuthRepository {
 
   // reservation
   Future<Map<String, dynamic>> reservation(
-    int bus_id,
-    int bus_route_id,
-    int num_pilgrims,
-    int num_bags,
-    String umrah_company,
-    String mecca_hotel_name,
-    String medina_hotel_name,
+    int busId,
+    int busRouteId,
+    int numPilgrims,
+    int numBags,
+    String umrahCompany,
+    String meccaHotelName,
+    String medinaHotelName,
   ) async {
     final data = {
-      'bus_id': bus_id,
-      'bus_route_id': bus_route_id,
-      'num_pilgrims': num_pilgrims,
-      'num_bags': num_bags,
-      'umrah_company': umrah_company,
-      'mecca_hotel_name': mecca_hotel_name,
-      'medina_hotel_name': medina_hotel_name,
+      'bus_id': busId,
+      'bus_route_id': busRouteId,
+      'num_pilgrims': numPilgrims,
+      'num_bags': numBags,
+      'umrah_company': umrahCompany,
+      'mecca_hotel_name': meccaHotelName,
+      'medina_hotel_name': medinaHotelName,
     };
     final response = await _apiService.post('user/reservations', data);
 
@@ -71,28 +71,28 @@ class AuthRepository {
 
   // reservation
   Future<Map<String, dynamic>> smallReservation(
-      int bus_id,
-      int bus_route_id,
-      int number_of_riders,
-      int number_of_bags,
-      String trip_number,
-      String travel_airlines,
+      int busId,
+      int busRouteId,
+      int numberOfRiders,
+      int numberOfBags,
+      String tripNumber,
+      String travelAirlines,
       String time,
       String date,
       String origin,
       String destination,
       BuildContext context) async {
     final data = {
-      'bus_id': bus_id,
-      'route_id': bus_route_id,
-      'trip_number': trip_number,
-      'number_of_bags': number_of_bags,
+      'bus_id': busId,
+      'route_id': busRouteId,
+      'trip_number': tripNumber,
+      'number_of_bags': numberOfBags,
       'origin': origin,
       'destination': destination,
-      'number_of_riders': number_of_riders,
+      'number_of_riders': numberOfRiders,
       'date': date,
       'time': time,
-      'travel_airlines': travel_airlines,
+      'travel_airlines': travelAirlines,
     };
     final response = await _apiService.post('small-routes-reservation', data);
 
@@ -106,18 +106,18 @@ class AuthRepository {
 
   // storeArrivalDeparture
   Future<Map<String, dynamic>> storeArrivalDeparture(
-    int reservation_id,
+    int reservationId,
     String date,
     String time,
-    String flight_number,
+    String flightNumber,
     String airline,
     String type,
   ) async {
     final data = {
-      'reservation_id': reservation_id,
+      'reservation_id': reservationId,
       'date': date,
       'time': time,
-      'flight_number': flight_number,
+      'flight_number': flightNumber,
       'airline': airline,
       'type': type,
     };
@@ -133,20 +133,20 @@ class AuthRepository {
 
   // storeInternalMovement
   Future<Map<String, dynamic>> storeInternalMovement(
-    int reservation_id,
-    DateTime movement_date,
-    String from_place,
-    String to_place,
-    String movement_time,
-    String bus_arrival_time,
+    int reservationId,
+    DateTime movementDate,
+    String fromPlace,
+    String toPlace,
+    String movementTime,
+    String busArrivalTime,
   ) async {
     final data = {
-      'reservation_id': reservation_id,
-      'movement_date': movement_date,
-      'from_place': from_place,
-      'to_place': to_place,
-      'movement_time': movement_time,
-      'bus_arrival_time': bus_arrival_time,
+      'reservation_id': reservationId,
+      'movement_date': movementDate,
+      'from_place': fromPlace,
+      'to_place': toPlace,
+      'movement_time': movementTime,
+      'bus_arrival_time': busArrivalTime,
     };
     final response = await _apiService.post('internal-movements', data);
 
@@ -160,20 +160,20 @@ class AuthRepository {
 
   // storeVisit
   Future<Map<String, dynamic>> storeVisit(
-    int reservation_id,
-    String visit_date,
-    String from_place,
-    String to_place,
-    String movement_time,
-    String bus_arrival_time,
+    int reservationId,
+    String visitDate,
+    String fromPlace,
+    String toPlace,
+    String movementTime,
+    String busArrivalTime,
   ) async {
     final data = {
-      'reservation_id': reservation_id,
-      'visit_date': visit_date,
-      'from_place': from_place,
-      'to_place': to_place,
-      'movement_time': movement_time,
-      'bus_arrival_time': bus_arrival_time,
+      'reservation_id': reservationId,
+      'visit_date': visitDate,
+      'from_place': fromPlace,
+      'to_place': toPlace,
+      'movement_time': movementTime,
+      'bus_arrival_time': busArrivalTime,
     };
     final response = await _apiService.post('visits', data);
 
@@ -310,6 +310,30 @@ class AuthRepository {
     }
   }
 
+  // Method to cancel reservation
+  Future<Map<String, dynamic>> cancelReservation(
+      int reservationId, BuildContext context) async {
+    final response =
+        await _apiService.post('/reservations/$reservationId/cancel', {});
+
+    if (response.statusCode == 200) {
+      IconSnackBar.show(context,
+          snackBarType: SnackBarType.success,
+          labelTextStyle: const TextStyle(fontSize: 12),
+          label: 'تم الغاء الحجز بنجاح');
+      return jsonDecode(response.body);
+    } else if (response.statusCode == 400) {
+      IconSnackBar.show(context,
+          snackBarType: SnackBarType.fail,
+          label:
+              'لا يمكنك الغاء الحجز قبل 48 ساعة من بداية الوصول , تواصل مع الدعم.',
+          labelTextStyle: const TextStyle(fontSize: 12));
+      throw Exception('can\'t cancel');
+    } else {
+      throw Exception('Failed to cancel reservation: ${response.body}');
+    }
+  }
+
   Future<Map<String, dynamic>> payInCompany(BuildContext context) async {
     final response = await _apiService.post('company-hq-payment-requests', {});
 
@@ -319,6 +343,30 @@ class AuthRepository {
             snackBarType: SnackBarType.success,
             labelTextStyle: const TextStyle(fontSize: 12),
             label: 'تم ارسال الطلب');
+        return jsonDecode(response.body);
+      } else {
+        IconSnackBar.show(context,
+            snackBarType: SnackBarType.fail,
+            label: 'حدث خطأ.',
+            labelTextStyle: const TextStyle(fontSize: 12));
+        throw Exception('Failed to add bus to favorites: ${response.body}');
+      }
+    } catch (e) {
+      print(e);
+      throw Exception('Failed to add bus to favorites: ${response.body}');
+    }
+  }
+
+  Future<Map<String, dynamic>> payForTransfers(
+      BuildContext context, double amount) async {
+    final response = await _apiService.post('pay', {"amount": amount});
+
+    try {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        IconSnackBar.show(context,
+            snackBarType: SnackBarType.success,
+            labelTextStyle: const TextStyle(fontSize: 12),
+            label: 'تم الدفع بنجاح!');
         return jsonDecode(response.body);
       } else {
         IconSnackBar.show(context,

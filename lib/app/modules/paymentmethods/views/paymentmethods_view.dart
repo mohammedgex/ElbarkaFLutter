@@ -60,7 +60,9 @@ class PaymentmethodsView extends GetView<PaymentmethodsController> {
                   onTap: () {
                     if (index == 0) {
                       if (controller.paymentKey != null) {
-                        Get.toNamed(Routes.PAYMOB_PAYMENT);
+                        Get.toNamed(Routes.PAYMOB_PAYMENT, arguments: {
+                          "isTransfer": args["isTransfer"] ?? false
+                        });
                       }
                     } else if (index == 1) {
                       Get.toNamed(Routes.SELF_PAYMENT);

@@ -29,7 +29,7 @@ class bottom_NavigationBar extends StatelessWidget {
           ),
           label: "الرئيسية",
           selectedIcon: Icon(
-            IconlyLight.home,
+            IconlyBold.home,
             color: appColors.secondColor,
           ),
         ),
@@ -38,9 +38,20 @@ class bottom_NavigationBar extends StatelessWidget {
             IconlyLight.bookmark,
             color: appColors.mainColor,
           ),
-          label: "الحجوزات",
+          label: "المحفوظات",
           selectedIcon: Icon(
-            IconlyLight.bookmark,
+            IconlyBold.bookmark,
+            color: appColors.secondColor,
+          ),
+        ),
+        NavigationDestination(
+          icon: Icon(
+            IconlyLight.wallet,
+            color: appColors.mainColor,
+          ),
+          label: "المدفوعات",
+          selectedIcon: Icon(
+            IconlyBold.wallet,
             color: appColors.secondColor,
           ),
         ),
@@ -51,7 +62,7 @@ class bottom_NavigationBar extends StatelessWidget {
           ),
           label: "البروفايل",
           selectedIcon: Icon(
-            IconlyLight.profile,
+            IconlyBold.profile,
             color: appColors.secondColor,
           ),
         ),

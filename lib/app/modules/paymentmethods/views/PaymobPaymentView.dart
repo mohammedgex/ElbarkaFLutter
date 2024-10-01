@@ -10,6 +10,7 @@ class PaymobPaymentView extends GetView<PaymentmethodsController> {
   const PaymobPaymentView({super.key});
   @override
   Widget build(BuildContext context) {
+    final args = Get.arguments;
     final webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -22,7 +23,9 @@ class PaymobPaymentView extends GetView<PaymentmethodsController> {
           onPageFinished: (String url) {
             // Check if the URL indicates success or failure and navigate accordingly
             if (url.contains("success=true")) {
-              controller.payWithCard();
+              args["isTransfer"]
+                  ? controller.paymentForTransfers(context)
+                  : controller.payWithCard();
               Get.toNamed(Routes.PAYMENT_STATUS, arguments: {
                 "paymentStatus": true
               }); // Navigate to success page

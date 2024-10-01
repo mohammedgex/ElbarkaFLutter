@@ -7,7 +7,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../controllers/chat_support_controller.dart';
 
 class ChatSupportView extends GetView<ChatSupportController> {
-  const ChatSupportView({Key? key}) : super(key: key);
+  const ChatSupportView({super.key});
   @override
   Widget build(BuildContext context) {
     final controller = WebViewController()

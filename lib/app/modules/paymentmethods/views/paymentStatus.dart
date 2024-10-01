@@ -86,7 +86,7 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
                         Text(
                           "دفع الكتروني",
                           style: TextStyle(
-                              fontFamily: Appfonts.meduimFont,
+                              fontFamily: Appfonts.lightFont,
                               fontSize: 13,
                               color: appColors.secondColor),
                         ),
@@ -105,7 +105,7 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
                             ? Text(
                                 "${controller.amountEGP! * 13.5} جنية",
                                 style: const TextStyle(
-                                    fontFamily: Appfonts.meduimFont,
+                                    fontFamily: Appfonts.lightFont,
                                     fontSize: 13,
                                     color: appColors.secondColor),
                               )
@@ -124,7 +124,7 @@ class PaymentStatusView extends GetView<PaymentmethodsController> {
                         Text(
                           "${controller.amountSR} ريال",
                           style: const TextStyle(
-                              fontFamily: Appfonts.meduimFont,
+                              fontFamily: Appfonts.lightFont,
                               fontSize: 13,
                               color: appColors.secondColor),
                         ),

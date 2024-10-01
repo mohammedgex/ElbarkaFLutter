@@ -1,4 +1,5 @@
-import 'package:baraka_trans/app/modules/shortRouteReservation/views/short_reservation.dart';
+import 'package:baraka_trans/app/modules/Transfers/views/transfersDetails.dart';
+import 'package:baraka_trans/app/modules/myreservations/views/myReservationDetails.dart';
 import 'package:get/get.dart';
 
 import '../modules/ChatSupport/bindings/chat_support_binding.dart';
@@ -10,6 +11,8 @@ import '../modules/Login/views/login_view.dart';
 import '../modules/Signup/bindings/signup_binding.dart';
 import '../modules/Signup/views/signup_view.dart';
 import '../modules/Signup/views/verify_account.dart';
+import '../modules/Transfers/bindings/transfers_binding.dart';
+import '../modules/Transfers/views/transfers_view.dart';
 import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/checkout_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -41,6 +44,7 @@ import '../modules/reservation/views/reservation_view.dart';
 import '../modules/saved_transportations/bindings/saved_transportations_binding.dart';
 import '../modules/saved_transportations/views/saved_transportations_view.dart';
 import '../modules/shortRouteReservation/bindings/short_route_reservation_binding.dart';
+import '../modules/shortRouteReservation/views/short_reservation.dart';
 import '../modules/shortRouteReservation/views/short_route_reservation_view.dart';
 import '../modules/transport_details/bindings/transport_details_binding.dart';
 import '../modules/transport_details/views/notes.dart';
@@ -74,6 +78,11 @@ class AppPages {
     GetPage(
       name: _Paths.MYRESERVATIONS,
       page: () => const MyreservationsView(),
+      binding: MyreservationsBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_RESERVATION_DETAILS,
+      page: () => MyReservationDetails(),
       binding: MyreservationsBinding(),
     ),
     GetPage(
@@ -173,7 +182,7 @@ class AppPages {
         transition: Transition.downToUp),
     GetPage(
       name: _Paths.SAVED_TRANSPORTATIONS,
-      page: () => const SavedTransportationsView(),
+      page: () => SavedTransportationsView(),
       binding: SavedTransportationsBinding(),
     ),
     GetPage(
@@ -186,5 +195,15 @@ class AppPages {
       page: () => const ShortRouteReservationView(),
       binding: ShortRouteReservationBinding(),
     ),
+    GetPage(
+      name: _Paths.TRANSFERS,
+      page: () => const TransfersView(),
+      binding: TransfersBinding(),
+    ),
+    GetPage(
+        name: _Paths.TRANSFER_DETAILS,
+        page: () => TransferDetailsView(),
+        binding: TransfersBinding(),
+        transition: Transition.rightToLeft),
   ];
 }

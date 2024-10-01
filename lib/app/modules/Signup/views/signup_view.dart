@@ -4,7 +4,6 @@ import 'package:baraka_trans/consts/fonts.dart';
 import 'package:baraka_trans/utilits/TextField.dart';
 import 'package:baraka_trans/utilits/button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';

@@ -151,10 +151,7 @@ class ReservationController extends GetxController {
       // success
       if (result["success"]) {
         isLoading.value = false;
-        pageController.nextPage(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.slowMiddle,
-        );
+
         if (isMecca == false) {
           Get.offAllNamed(Routes.PAYMENTMETHODS, arguments: {
             "reservationId": reservationId,
@@ -162,11 +159,17 @@ class ReservationController extends GetxController {
             "amountSR": amountSR
           });
         }
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.slowMiddle,
+        );
       } else {
         print("failed");
+
         isLoading.value = false;
       }
     } catch (e) {
+      print(e);
       isLoading.value = false;
     }
   }
