@@ -22,7 +22,6 @@ class SavedTransportationsView extends GetView<SavedTransportationsController> {
           'المحفوظات',
           style: TextStyle(fontFamily: Appfonts.boldFont),
         ),
-        centerTitle: true,
       ),
       body: FutureBuilder(
         future: savedTransportationsController.fetchUserFavoritesList(),

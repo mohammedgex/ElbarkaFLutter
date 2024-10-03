@@ -2,11 +2,13 @@ import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:baraka_trans/utilits/TextField.dart';
 import 'package:baraka_trans/utilits/button.dart';
-import 'package:board_datetime_picker/board_datetime_picker.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:intl/intl.dart';
+import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 import '../controllers/reservation_controller.dart';
 
 class ArrivalReservationView extends GetView<ReservationController> {
@@ -34,11 +36,11 @@ class ArrivalReservationView extends GetView<ReservationController> {
                 const Text(
                   "يرجي كتابة بيانات الوصول بطريقة صحيحة.",
                   style: TextStyle(
-                      fontFamily: Appfonts.mainFont,
-                      decoration: TextDecoration.underline,
-                      decorationColor: appColors.secondColor,
-                      fontSize: 16, // Slightly increased font size
-                     ),
+                    fontFamily: Appfonts.mainFont,
+                    decoration: TextDecoration.underline,
+                    decorationColor: appColors.secondColor,
+                    fontSize: 22, // Slightly increased font size
+                  ),
                 ),
                 SizedBox(height: screenHeight * 0.02), // Added spacing
                 Container(
@@ -123,50 +125,57 @@ class ArrivalReservationView extends GetView<ReservationController> {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
-                BoardDateTimeInputField(
-                  showPicker: true,
-                  showPickerType: BoardDateTimeFieldPickerType.standard,
-                  controller: controller.Timecontroller,
-                  initialDate: DateTime.now(),
-                  keyboardType: TextInputType.none,
-                  textAlign: TextAlign.center,
-                  textStyle: const TextStyle(
-                      fontWeight: FontWeight.w800, fontSize: 18),
-                  decoration: const InputDecoration(
-                      label: Text("توقيت الوصول"),
-                      suffixIcon: Icon(
-                        IconlyLight.time_square,
-                        color: appColors.secondColor,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(
-                              color: appColors.secondColor, width: 0.5)),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(
-                              color: appColors.mainColor, width: 0.5)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide(
-                              color: appColors.secondColor, width: 0.5))),
-                  pickerType: DateTimePickerType.time,
-                  options: const BoardDateTimeOptions(
-                      languages: BoardPickerLanguages.en(),
-                      textColor: Colors.black,
-                      foregroundColor: appColors.secondColor,
-                      activeColor: Colors.white,
-                      backgroundColor: Colors.white,
-                      boardTitle: "اختر توقيت الوصول",
-                      boardTitleTextStyle: TextStyle(
-                          fontSize: 14, fontFamily: Appfonts.boldFont),
-                      inputable: false),
-                  onChanged: (date) {
-                    controller.selectedTime = date;
-                  },
-                  onFocusChange: (val, date, text) {
-                    print('on focus changed date: $val, $date, $text');
-                  },
+                SizedBox(
+                  width: double.infinity,
+                  height: 45,
+                  child: TimePickerSpinnerPopUp(
+                    mode: CupertinoDatePickerMode.time,
+                    initTime: DateTime.now(),
+                    minTime: DateTime.now().subtract(const Duration(days: 10)),
+                    maxTime: DateTime.now().add(const Duration(days: 10)),
+                    // //Barrier Color when pop up show
+                    // minuteInterval: 1,
+                    padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                    cancelText: 'الغاء',
+                    confirmText: 'تأكيد',
+                    iconSize: 20,
+                    pressType: PressType.singlePress,
+                    timeFormat: 'HH:mm',
+                    textStyle: const TextStyle(
+                        fontFamily: Appfonts.mainFont,
+                        color: appColors.secondColor),
+                    // Customize your time widget
+                    timeWidgetBuilder: (dateTime) {
+                      // تأكد أن `dateTime` ليس null
+                      // ننسق الوقت حسب ما نريد
+                      String formattedTime =
+                          DateFormat('HH:mm').format(dateTime);
+
+                      // نعرض الوقت في ويدجت
+                      return Container(
+                        width: double.infinity,
+                        height: 45,
+                        padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: appColors.secondColor)),
+                        child: Center(
+                          child: Text(
+                            formattedTime,
+                            style: const TextStyle(
+                              fontFamily: Appfonts.mainFont,
+                              color: appColors.secondColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    onChange: (dateTime) {
+                      print(dateTime);
+                      controller.selectedTime = dateTime;
+                    },
+                  ),
                 ),
                 SizedBox(
                     height:
@@ -175,7 +184,6 @@ class ArrivalReservationView extends GetView<ReservationController> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       controller.arivalDepture(true);
-                      
                     }
                   },
                   child: const Button(

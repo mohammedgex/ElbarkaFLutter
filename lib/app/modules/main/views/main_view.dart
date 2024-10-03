@@ -109,44 +109,63 @@ class MainView extends GetView<MainController> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                SizedBox(
-                  width: double.infinity,
-                  height: 200,
-                  child: Swiper(
-                    pagination: const SwiperPagination(
-                      alignment: Alignment.bottomCenter,
-                      builder: SwiperPagination.dots,
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(loadingBuilder:
-                                (BuildContext context, Widget child,
-                                    ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child; // Image is fully loaded
-                          } else {
-                            // Display a loading indicator
-                            return Center(
-                              child: Container(
-                                width: double.infinity,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                    color: appColors.textColor,
-                                    borderRadius: BorderRadius.circular(12)),
-                              ),
+                FutureBuilder(
+                    future: controller.fetchBanners(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container(
+                          width: double.infinity,
+                          height: 200,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: appColors.borderColor),
+                        );
+                      }
+
+                      if (!snapshot.hasData) {
+                        return const Center(
+                            child: Text("No transfers available"));
+                      }
+                      return SizedBox(
+                        width: double.infinity,
+                        height: 200,
+                        child: Swiper(
+                          pagination: const SwiperPagination(
+                            alignment: Alignment.bottomCenter,
+                            builder: SwiperPagination.dots,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(loadingBuilder:
+                                      (BuildContext context, Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child; // Image is fully loaded
+                                } else {
+                                  // Display a loading indicator
+                                  return Center(
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                          color: appColors.textColor,
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                    ),
+                                  );
+                                }
+                              },
+                                  fit: BoxFit.cover,
+                                  "https://6874-188-40-217-164.ngrok-free.app/storage/${snapshot.data!.images[index]}"),
                             );
-                          }
-                        },
-                            fit: BoxFit.cover,
-                            "https://egsky.net/wp-content/uploads/2022/09/%D8%AA%D8%A3%D8%AC%D9%8A%D8%B1-%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA-%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6-1.jpg"),
+                          },
+                          itemCount: snapshot.data!.images.length,
+                          viewportFraction: 1,
+                          scale: 0.7,
+                        ),
                       );
-                    },
-                    itemCount: 3,
-                    viewportFraction: 1,
-                    scale: 0.7,
-                  ),
-                ),
+                    }),
                 const SizedBox(height: 20),
                 FutureBuilder(
                   future: controller.fetchCategories(),

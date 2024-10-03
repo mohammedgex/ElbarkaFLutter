@@ -16,7 +16,6 @@ class MyPaymentsView extends GetView<MyPaymentsController> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          centerTitle: true,
           title: const Text(
             'عمليات الدفع',
             style: TextStyle(fontFamily: Appfonts.boldFont),

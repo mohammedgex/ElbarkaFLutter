@@ -45,7 +45,7 @@ class BasicReservationView extends GetView<ReservationController> {
                         fontFamily: Appfonts.boldFont,
                         decorationColor: appColors.secondColor,
                         decoration: TextDecoration.underline,
-                        fontSize: screenWidth * 0.04, // Responsive font size
+                        fontSize: screenWidth * 0.06, // Responsive font size
                       ),
                     ),
                   ),

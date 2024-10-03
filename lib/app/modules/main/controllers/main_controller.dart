@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:baraka_trans/app/data/bannerModel.dart';
 import 'package:baraka_trans/app/data/categoryModel.dart';
 import 'package:baraka_trans/app/data/tranportaionModel.dart';
 import 'package:baraka_trans/app/data/user_model.dart';
@@ -104,5 +105,15 @@ class MainController extends GetxController {
       print('Failed to fetch transportation data: $e');
     }
     return transportationsList;
+  }
+
+  Future<BannerModel> fetchBanners() async {
+    final response = await _apiService.get('banner1');
+    if (response.statusCode == 200) {
+      print(response.body);
+      return BannerModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load property details');
+    }
   }
 }

@@ -158,6 +158,8 @@ class TransfersView extends GetView<TransfersController> {
                                     "destination": transfer.destination,
                                     "reservationStatus":
                                         transfer.reservationStatus,
+                                         "paymentStatus": transfer.paymentStatus,
+                                    
                                     "type": transportation.type,
                                     "routeName": transfer.route.name,
                                     "price": transfer.numberOfBags,

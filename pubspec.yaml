@@ -24,7 +24,7 @@ dependencies:
   flutter_onboarding_slider: ^1.0.11
   card_swiper: ^3.0.1
   select_field: ^1.1.0
-  time_picker_spinner_pop_up: ^1.0.3
+  time_picker_spinner_pop_up: ^1.5.0
   fancy_shimmer_image: ^2.0.3
   introduction_screen: ^3.1.14
   dots_indicator: ^2.1.2

@@ -3,13 +3,11 @@ import 'package:baraka_trans/consts/consts.dart';
 import 'package:baraka_trans/consts/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import '../controllers/transfers_controller.dart';
 
 class TransferDetailsView extends GetView<TransfersController> {
-  TransferDetailsView({super.key});
+  const TransferDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +27,9 @@ class TransferDetailsView extends GetView<TransfersController> {
     final reservationStatus = arguments['reservationStatus'];
     final type = arguments['type'];
     final routeName = arguments['routeName'];
-    final price = arguments['price'];
     final createdAt = arguments['createdAt'];
     final imageUrl = arguments['imageUrl'];
+    final paymentStatus = arguments['paymentStatus'];
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -115,7 +113,8 @@ class TransferDetailsView extends GetView<TransfersController> {
                 height: 12,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     type,
@@ -123,13 +122,6 @@ class TransferDetailsView extends GetView<TransfersController> {
                         fontFamily: Appfonts.boldFont,
                         color: appColors.secondColor,
                         fontSize: 18),
-                  ),
-                  Text(
-                    price.toString(),
-                    style: const TextStyle(
-                        fontFamily: Appfonts.boldFont,
-                        color: appColors.textColor,
-                        fontSize: 12),
                   ),
                 ],
               ),
@@ -183,6 +175,10 @@ class TransferDetailsView extends GetView<TransfersController> {
                       rowDetail(
                         title: "رقم الرحلة",
                         detail: tripNumber,
+                      ),
+                      rowDetail(
+                        title: "حالة الدفع",
+                        detail: paymentStatus,
                       ),
                       rowDetail(
                         title: "توقيت الوصول",
